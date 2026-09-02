@@ -1,0 +1,9 @@
+# Hugo-generated output
+/public/
+/resources/_gen/
+/hugo_stats.json
+/.hugo_build.lock
+
+# Local operating-system files
+.DS_Store
+Thumbs.db
