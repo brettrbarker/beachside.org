@@ -1,0 +1,50 @@
+{{ define "main" }}
+  {{ $home := hugo.Data.home }}
+  <section class="home-hero" style="--hero-image: url('{{ $home.hero.image | relURL }}')">
+    <div class="home-hero-overlay"></div>
+    <div class="home-hero-inner">
+      <div class="home-hero-copy">
+        <h1>{{ $home.hero.title }}</h1>
+        <p>{{ $home.hero.description }}</p>
+        <a class="button button-primary" href="{{ $home.hero.button.url | relURL }}">{{ $home.hero.button.label }}</a>
+        <a class="hero-secondary" href="{{ $home.hero.secondary.url | relURL }}">{{ $home.hero.secondary.label }}</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="schedule-bar">{{ $home.schedule }}</div>
+
+  <div class="home-sections">
+    <section class="home-section">
+      <h2>{{ $home.journey.heading }}</h2>
+      <div class="tile-grid journey-grid">
+        {{ range $home.journey.cards }}{{ partial "tile.html" . }}{{ end }}
+      </div>
+    </section>
+
+    <section class="home-section">
+      <h2>{{ $home.families.heading }}</h2>
+      <div class="tile-grid family-grid">
+        {{ range $home.families.cards }}{{ partial "tile.html" . }}{{ end }}
+      </div>
+    </section>
+
+    <section class="home-section">
+      <h2>{{ $home.adults.heading }}</h2>
+      <div class="tile-grid adult-grid">
+        {{ range $home.adults.cards }}{{ partial "tile.html" . }}{{ end }}
+      </div>
+    </section>
+
+    <section class="home-section social-section">
+      <h2>{{ $home.social.heading }}</h2>
+      <div class="social-grid">
+        {{ range $home.social.networks }}
+          <a class="social-tile social-{{ .class }}" href="{{ .url }}" target="_blank" rel="noopener" aria-label="Beachside on {{ .name }}">
+            <span aria-hidden="true">{{ .symbol }}</span>
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  </div>
+{{ end }}

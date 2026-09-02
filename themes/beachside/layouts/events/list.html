@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section class="events-page wrap">
+  <header class="page-header"><h1>{{ .Title }}</h1>{{ with .Description }}<p>{{ . }}</p>{{ end }}</header>
+  <div class="events-grid">
+    {{ range .Params.events }}
+      <a class="event-card" href="{{ .url }}" target="_blank" rel="noopener">
+        <img src="{{ .image | relURL }}" alt="{{ .title }} event artwork">
+        <span class="event-card-copy">
+          <strong>{{ .title }}</strong>
+          <time{{ with .date_iso }} datetime="{{ . }}"{{ end }}>{{ .date }}</time>
+        </span>
+      </a>
+    {{ else }}
+      <p>No events are currently listed. Check back soon.</p>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

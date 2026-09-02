@@ -1,0 +1,39 @@
+{{ $s := .section }}
+<section class="content-section section-{{ $s.kind | default "text" }}{{ with $s.theme }} theme-{{ . }}{{ end }}">
+  <div class="wrap">
+    {{ if eq ($s.kind | default "text") "split" }}
+      <div class="split{{ if eq $s.image_side "right" }} image-right{{ end }}">
+        {{ with $s.image }}
+          <div class="split-image"><img src="{{ . | relURL }}" alt="{{ $s.image_alt | default $s.title }}" loading="lazy"></div>
+        {{ end }}
+        <div class="split-copy">
+          {{ with $s.eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
+          {{ with $s.title }}<h2>{{ . }}</h2>{{ end }}
+          {{ with $s.body }}<div class="section-body">{{ . | markdownify }}</div>{{ end }}
+          {{ with $s.button }}<a class="button {{ if eq $s.theme "dark" }}button-light{{ else }}button-primary{{ end }}" href="{{ if hasPrefix .url "http" }}{{ .url }}{{ else }}{{ .url | relURL }}{{ end }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>{{ end }}
+        </div>
+      </div>
+    {{ else if eq $s.kind "cards" }}
+      {{ with $s.title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+      {{ with $s.body }}<div class="section-intro">{{ . | markdownify }}</div>{{ end }}
+      <div class="content-card-grid{{ with $s.columns }} columns-{{ . }}{{ end }}">
+        {{ range $s.cards }}
+          {{ partial "content-card.html" . }}
+        {{ end }}
+      </div>
+    {{ else if eq $s.kind "columns" }}
+      {{ with $s.title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+      <div class="text-columns">
+        {{ range $s.columns }}
+          <div>{{ with .title }}<h3>{{ . }}</h3>{{ end }}{{ with .body }}{{ . | markdownify }}{{ end }}</div>
+        {{ end }}
+      </div>
+    {{ else }}
+      <div class="text-section">
+        {{ with $s.title }}<h2>{{ . }}</h2>{{ end }}
+        {{ with $s.body }}<div>{{ . | markdownify }}</div>{{ end }}
+        {{ with $s.button }}<a class="button button-primary" href="{{ if hasPrefix .url "http" }}{{ .url }}{{ else }}{{ .url | relURL }}{{ end }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>{{ end }}
+      </div>
+    {{ end }}
+  </div>
+</section>

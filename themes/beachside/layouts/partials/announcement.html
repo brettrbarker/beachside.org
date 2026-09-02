@@ -1,0 +1,9 @@
+{{ with site.Params.announcement }}
+  {{ if .enabled }}
+    <aside class="announcement" data-announcement aria-label="Featured announcement">
+      <strong>{{ .text }}</strong>
+      <a href="{{ .url | relURL }}">{{ .linkText }}</a>
+      <button type="button" aria-label="Dismiss announcement" data-announcement-close>×</button>
+    </aside>
+  {{ end }}
+{{ end }}

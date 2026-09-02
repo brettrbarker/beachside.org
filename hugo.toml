@@ -1,3 +1,71 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'https://beachside.org/'
+locale = 'en-US'
+defaultContentLanguage = 'en'
+title = 'Beachside Church'
+theme = 'beachside'
+enableRobotsTXT = true
+disableKinds = ['taxonomy', 'term']
+
+[pagination]
+  pagerSize = 12
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[params]
+  description = "Inspiring people to follow Jesus with all of their heart."
+  phone = '850.629.9491'
+  address = '200 Racetrack Road NW, Fort Walton Beach, FL 32547'
+  logoLight = '/images/brand/logo-light.png'
+  logoDark = '/images/brand/logo-dark.png'
+  socialImage = '/images/brand/social-card.png'
+
+  [params.announcement]
+    enabled = true
+    text = 'Join a Community Group!'
+    url = '/adults/groups/'
+    linkText = 'Learn More'
+
+  [params.social]
+    facebook = 'https://www.facebook.com/BeachsideFWB'
+    instagram = 'https://www.instagram.com/BeachsideFWB/'
+    youtube = 'https://www.youtube.com/channel/UC14QcoW0fLDIbGpUiGWysNg'
+    tiktok = 'https://www.tiktok.com/@beachside.church'
+
+[[menus.main]]
+  name = 'For'
+  pageRef = '/for'
+  weight = 10
+[[menus.main]]
+  name = 'Messages'
+  pageRef = '/messages'
+  weight = 20
+[[menus.main]]
+  name = 'Give'
+  pageRef = '/engage/give'
+  weight = 30
+[[menus.main]]
+  name = 'Serve'
+  pageRef = '/engage/serve'
+  weight = 40
+[[menus.main]]
+  name = 'Connect'
+  url = 'https://beachsidecc.churchcenter.com/people/forms/198159'
+  weight = 50
+  [menus.main.params]
+    external = true
+[[menus.main]]
+  name = 'Events'
+  pageRef = '/events'
+  weight = 60
+[[menus.main]]
+  name = 'Plan Your Visit'
+  pageRef = '/visit'
+  weight = 70
+  [menus.main.params]
+    featured = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

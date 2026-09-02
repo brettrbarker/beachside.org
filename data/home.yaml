@@ -1,0 +1,99 @@
+hero:
+  title: WE ARE FOR THE EMERALD COAST.
+  description: For far too long, the church has been known for what it’s against. We want to be known for what we are for.
+  image: /images/home/hero.jpg
+  button:
+    label: Plan Your Visit
+    url: /visit/
+  secondary:
+    label: Or just show up!
+    url: /times-directions/
+
+schedule: In-person or online Sundays at 9:00 & 10:45 AM
+
+journey:
+  heading: Here's how to start your journey.
+  cards:
+    - title: 1. Join us on a Sunday
+      description: We have something for everyone in your family.
+      image: /images/home/join-sunday.jpg
+      url: /visit/
+    - title: 2. Connect with us
+      description: Learn about events and receive helpful content.
+      image: /images/home/connect.png
+      url: https://beachsidecc.churchcenter.com/people/forms/111935
+      external: true
+    - title: 3. Connect with others
+      description: Experience why life is better connected.
+      image: /images/home/connect-others.jpg
+      url: /adults/groups/
+    - title: Ready to start?
+      description: Plan your visit or join us Sunday!
+      image: /images/home/ready.png
+      url: /times-directions/
+
+families:
+  heading: For Families
+  cards:
+    - title: Birth through Preschool
+      description: Building a foundation that lasts
+      image: /images/home/waumba.jpg
+      url: /children/waumba-land/
+    - title: Elementary School
+      description: Preparing kids to take the high road
+      image: /images/home/upstreet.jpg
+      url: /children/upstreet/
+    - title: Middle School
+      description: Students who have a faith of their own
+      image: /images/home/transit.png
+      url: /students/transit/
+    - title: High School
+      description: A place where students belong
+      image: /images/home/insideout.png
+      url: /students/insideout/
+
+adults:
+  heading: For Adults
+  cards:
+    - title: Adult Sunday Experience
+      description: A helpful message and inspiring music
+      image: /images/home/adult-sunday.jpg
+      url: /messages/
+      featured: true
+    - title: Watch Online
+      description: New content Sundays at 9am
+      image: /images/home/watch-online.jpg
+      url: /watch-live/
+    - title: Prayer
+      description: How can we pray for you?
+      image: /images/home/prayer.png
+      url: https://beachsidecc.churchcenter.com/people/forms/346978
+      external: true
+    - title: Groups
+      description: Life is better connected
+      image: /images/home/adults.png
+      url: /adults/
+    - title: Join a Team
+      description: Make Beachside feel like your church
+      image: /images/home/serve.jpg
+      url: /engage/serve/
+
+social:
+  heading: Connect with us on social media.
+  networks:
+    - name: Facebook
+      class: facebook
+      symbol: f
+      url: https://www.facebook.com/BeachsideFWB
+    - name: TikTok
+      class: tiktok
+      symbol: ♪
+      url: https://www.tiktok.com/@beachside.church
+    - name: Instagram
+      class: instagram
+      symbol: ◎
+      url: https://www.instagram.com/BeachsideFWB/
+    - name: YouTube
+      class: youtube
+      symbol: ▶
+      url: https://www.youtube.com/channel/UC14QcoW0fLDIbGpUiGWysNg

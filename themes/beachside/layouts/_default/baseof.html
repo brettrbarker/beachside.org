@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default "en-US" }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="{{ if .IsHome }}home{{ else }}interior{{ end }}{{ if .Params.header_overlay }} overlay-header{{ end }}{{ if site.Params.announcement.enabled }} has-announcement{{ end }}{{ with .Section }} section-{{ . | urlize }}{{ end }}">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    {{ partial "header.html" . }}
+    <main id="main-content">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+    {{ partial "search.html" . }}
+    {{ partial "announcement.html" . }}
+  </body>
+</html>

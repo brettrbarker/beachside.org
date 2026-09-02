@@ -1,0 +1,9 @@
+name = 'Beachside'
+license = 'MIT'
+description = 'Custom theme for Beachside Church.'
+homepage = 'https://beachside.org/'
+min_version = '0.140.0'
+
+[author]
+  name = 'Beachside Church'
+  homepage = 'https://beachside.org/'

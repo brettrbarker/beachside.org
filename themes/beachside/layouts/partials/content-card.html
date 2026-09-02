@@ -1,0 +1,20 @@
+{{ if .url }}
+  {{ $url := .url }}
+  {{ if not (or (hasPrefix $url "http://") (hasPrefix $url "https://") (hasPrefix $url "mailto:") (hasPrefix $url "tel:")) }}{{ $url = $url | relURL }}{{ end }}
+  <a class="content-card" href="{{ $url }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>
+    {{ with .image }}<img src="{{ . | relURL }}" alt="" loading="lazy">{{ end }}
+    <span class="content-card-copy">
+      {{ with .title }}<strong>{{ . }}</strong>{{ end }}
+      {{ with .description }}<span>{{ . | markdownify }}</span>{{ end }}
+      {{ with .link_label }}<em>{{ . }} →</em>{{ end }}
+    </span>
+  </a>
+{{ else }}
+  <div class="content-card">
+    {{ with .image }}<img src="{{ . | relURL }}" alt="" loading="lazy">{{ end }}
+    <span class="content-card-copy">
+      {{ with .title }}<strong>{{ . }}</strong>{{ end }}
+      {{ with .description }}<span>{{ . | markdownify }}</span>{{ end }}
+    </span>
+  </div>
+{{ end }}

@@ -1,0 +1,49 @@
+<footer class="site-footer">
+  <div class="wave" aria-hidden="true"></div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="{{ site.Home.RelPermalink }}"><img src="{{ site.Params.logoDark | relURL }}" width="300" height="92" alt="Beachside Church"></a>
+      <div class="footer-social" aria-label="Social media">
+        <a href="{{ site.Params.social.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+        <a href="{{ site.Params.social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+        <a href="{{ site.Params.social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+        <a href="{{ site.Params.social.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">♪</a>
+      </div>
+    </div>
+    <div>
+      <h2>Location</h2>
+      <address>200 Racetrack Road NW<br>Fort Walton Beach, FL 32547</address>
+      <a href="tel:+18506299491">850.629.9491</a>
+    </div>
+    <div>
+      <h2>Our Church</h2>
+      <ul>
+        <li><a href="{{ "/times-directions/" | relURL }}">Locations, Times, and Directions</a></li>
+        <li><a href="{{ "/messages/" | relURL }}">Current Series</a></li>
+        <li><a href="{{ "/about/" | relURL }}">About Us</a></li>
+        <li><a href="{{ "/contact/" | relURL }}">Contact Us</a></li>
+        <li><a href="{{ "/jobs/" | relURL }}">Join Our Team</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Get Involved</h2>
+      <ul>
+        <li><a href="{{ "/adults/groups/" | relURL }}">Groups</a></li>
+        <li><a href="{{ "/adults/starting-point/" | relURL }}">Starting Point</a></li>
+        <li><a href="{{ "/engage/serve/" | relURL }}">Serve</a></li>
+        <li><a href="{{ "/engage/give/" | relURL }}">Give</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>What Are We For?</h2>
+      <ul>
+        <li><a href="{{ "/for/" | relURL }}">#ForTheEmeraldCoast</a></li>
+        <li><a href="https://northpointpartners.org/" target="_blank" rel="noopener">North Point Partners</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <span>© {{ now.Year }} Beachside Church</span>
+    <a href="{{ "/privacy-policy/" | relURL }}">Privacy Policy</a>
+  </div>
+</footer>
