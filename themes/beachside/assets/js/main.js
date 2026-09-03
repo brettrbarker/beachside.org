@@ -88,4 +88,57 @@
       });
     });
   }
+
+  document.querySelectorAll('.dg-card--devo').forEach((devotions) => {
+    const tabs = [...devotions.querySelectorAll('.dg-devo-tab')];
+    const panels = [...devotions.querySelectorAll('.dg-devo-panel')];
+    tabs.forEach((tab) => {
+      tab.type = 'button';
+      tab.setAttribute('role', 'tab');
+      const panel = panels.find((item) => item.id === `devo-${tab.dataset.day || ''}`);
+      if (panel) {
+        tab.setAttribute('aria-controls', panel.id);
+        panel.setAttribute('role', 'tabpanel');
+      }
+      tab.setAttribute('aria-selected', String(tab.classList.contains('active')));
+      tab.addEventListener('click', () => {
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+        panels.forEach((item) => item.classList.toggle('active', item.id === `devo-${tab.dataset.day}`));
+      });
+    });
+  });
+
+  const guideFilters = [...document.querySelectorAll('[data-guide-filter]')];
+  const guideItems = [...document.querySelectorAll('[data-guide-item]')];
+  const guideEmpty = document.querySelector('[data-guide-empty]');
+  if (guideFilters.length && guideItems.length) {
+    const applyGuideFilter = (series) => {
+      let visible = 0;
+      guideItems.forEach((item) => {
+        const show = !series || item.dataset.guideSeries === series;
+        item.hidden = !show;
+        if (show) visible += 1;
+      });
+      guideFilters.forEach((button) => {
+        const active = button.dataset.guideFilter === series;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      if (guideEmpty) guideEmpty.hidden = visible !== 0;
+    };
+    const initialSeries = new URL(window.location.href).searchParams.get('series') || '';
+    applyGuideFilter(initialSeries);
+    guideFilters.forEach((button) => button.addEventListener('click', () => {
+      const series = button.dataset.guideFilter || '';
+      const url = new URL(window.location.href);
+      if (series) url.searchParams.set('series', series);
+      else url.searchParams.delete('series');
+      window.history.replaceState({}, '', url);
+      applyGuideFilter(series);
+    }));
+  }
 })();

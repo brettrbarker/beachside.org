@@ -1,0 +1,15 @@
+{{ define "main" }}
+<article class="dg-page">
+  <div class="dg-back"><a href="{{ "/discipleship-guides/" | relURL }}">← All Discipleship Guides</a></div>
+
+  <header class="dg-hero{{ if .Params.display_series }} has-series{{ end }}">
+    <div class="dg-hero-eyebrow">Discipleship Guide</div>
+    {{ if .Params.display_series }}{{ with .Params.series }}<div class="dg-hero-series">{{ . }}</div>{{ end }}{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.speaker }}<p class="dg-hero-speaker">with {{ . }}</p>{{ end }}
+    {{ if not .Date.IsZero }}<time class="dg-hero-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ end }}
+  </header>
+
+  {{ .RawContent | safeHTML }}
+</article>
+{{ end }}

@@ -1,0 +1,51 @@
+{{ define "main" }}
+<section class="arch-page">
+  <header class="arch-hero">
+    <div class="arch-hero-eyebrow">Beachside Church</div>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+  </header>
+
+  <div class="arch-wrap">
+    {{ $series := slice }}
+    {{ range .RegularPages }}
+      {{ with .Params.series }}{{ $series = $series | append . }}{{ end }}
+    {{ end }}
+    {{ $series = sort (uniq $series) }}
+
+    {{ with $series }}
+      <nav class="arch-filter" aria-label="Filter guides by series">
+        <span class="arch-filter-label">Series</span>
+        <button class="active" type="button" data-guide-filter="" aria-pressed="true">All</button>
+        {{ range . }}
+          <button type="button" data-guide-filter="{{ . | urlize }}" aria-pressed="false">{{ . }}</button>
+        {{ end }}
+      </nav>
+    {{ end }}
+
+    <div class="arch-list" data-guide-list>
+      {{ range .RegularPages.ByDate.Reverse }}
+        <a class="arch-item" href="{{ .RelPermalink }}" data-guide-item data-guide-series="{{ .Params.series | default "" | urlize }}">
+          <time class="arch-item-date-block" datetime="{{ .Date.Format "2006-01-02" }}">
+            <span class="arch-item-date-month">{{ .Date.Format "Jan" }}</span>
+            <span class="arch-item-date-day">{{ .Date.Format "2" }}</span>
+            <span class="arch-item-date-year">{{ .Date.Format "2006" }}</span>
+          </time>
+          <span class="arch-item-divider" aria-hidden="true"></span>
+          <span class="arch-item-body">
+            {{ with .Params.series }}<span class="arch-item-series">{{ . }}</span>{{ end }}
+            <strong class="arch-item-title">{{ .Title }}</strong>
+            {{ with .Params.speaker }}<span class="arch-item-speaker">with {{ . }}</span>{{ end }}
+          </span>
+          <span class="arch-item-arrow" aria-hidden="true">→</span>
+        </a>
+      {{ else }}
+        <p class="arch-empty">New discipleship guides will be posted here.</p>
+      {{ end }}
+    </div>
+    <p class="arch-empty" data-guide-empty hidden>No guides match this series.</p>
+  </div>
+
+  <footer class="arch-footer-strip">Beachside Church &nbsp;·&nbsp; <span>For the Emerald Coast</span></footer>
+</section>
+{{ end }}

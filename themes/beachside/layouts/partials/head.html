@@ -7,7 +7,7 @@
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:title" content="{{ if .IsHome }}Home - {{ site.Title }}{{ else }}{{ .Title }} - {{ site.Title }}{{ end }}">
 <meta property="og:description" content="{{ $description }}">
-<meta property="og:type" content="{{ if eq .Section "messages" }}article{{ else }}website{{ end }}">
+<meta property="og:type" content="{{ if or (eq .Section "messages") (and .IsPage (eq .Section "discipleship-guide")) }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 {{ $social := site.Params.socialImage | absURL }}
 {{ with .Params.image }}{{ $social = . | absURL }}{{ end }}
@@ -18,6 +18,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+{{ if eq .Section "discipleship-guide" }}
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,700;0,800;0,900;1,400&family=Zilla+Slab:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+{{ end }}
 {{ $style := resources.Get "css/main.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
 {{ $script := resources.Get "js/main.js" | minify | fingerprint }}

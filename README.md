@@ -143,7 +143,7 @@ description: "A short summary used on message cards and in search previews."
 image: "/images/messages/built-to-last.jpg"
 video_url: "https://www.youtube.com/watch?v=example"
 audio_url: "https://example.org/path/to/audio.mp3"
-guide_url: "https://example.org/path/to/discipleship-guide/"
+guide_url: "/discipleship-guide/built-to-last-part-2/"
 draft: true
 ---
 ```
@@ -153,9 +153,12 @@ Then:
 1. Add the artwork to `static/images/messages/` and make the `image` value
    match its public `/images/messages/...` path. Leave `image` empty only when
    no artwork is available.
-2. Use complete public URLs for `video_url`, `audio_url`, and `guide_url`. A
-   YouTube watch URL or `youtu.be` URL is converted to a privacy-enhanced embed.
-   Leave either optional resource URL empty when it is unavailable.
+2. Use complete public URLs for `video_url` and `audio_url`. A YouTube watch URL
+   or `youtu.be` URL is converted to a privacy-enhanced embed. For a guide in
+   this site, use its root-relative URL, such as
+   `/discipleship-guide/built-to-last-part-2/`. An externally hosted guide may
+   still use a complete `https://` URL. Leave optional URLs empty when they are
+   unavailable.
 3. Add any longer notes or supporting links below the front matter in Markdown.
 4. Preview the message with the draft-enabled development command above.
 5. Check the title, date, speaker, series, media links, artwork crop, and message
@@ -168,6 +171,45 @@ Then:
 Do not edit a generated file in `public/messages/`; Hugo will overwrite it on
 the next build. Always edit the corresponding source file in
 `content/messages/`.
+
+## Add a discipleship guide
+
+The guide archive is generated at `/discipleship-guides/`. Individual guides
+live at `/discipleship-guide/<guide-slug>/`; they are intentionally not added to
+the homepage or primary navigation. Create a guide with:
+
+```sh
+hugo new content discipleship-guide/built-to-last-part-2.md
+```
+
+This uses `archetypes/discipleship-guide.md`, which contains the same reusable
+sections as the live guides: message recap, main idea, discussion questions,
+five daily devotions, spiritual practice, prayer prompts, next steps, and
+resources. Open the new file under `content/discipleship-guide/` and:
+
+1. Set `title`, `date`, `speaker`, `series`, and a short `description` in the
+   front matter. The archive sorts by `date` and creates series filters from the
+   exact `series` values. Add `display_series: true` only when the series name
+   should also appear in the guide's dark title panel; omit it otherwise.
+2. Replace the placeholder copy inside each HTML content block. Keep the
+   existing `dg-...` class names because they provide the card layout and
+   responsive styling.
+3. In the devotion tabs, keep each button's `data-day` matched to its panel ID,
+   such as `data-day="monday"` and `id="devo-monday"`. The theme handles tab
+   switching and keyboard focus without page-specific scripts.
+4. Change `draft` to `false` when ready.
+5. Set the corresponding message's `guide_url` to the guide's root-relative
+   path, preview both directions, and verify every devotion tab on desktop and
+   mobile.
+
+To omit a section, delete its entire enclosing `<section>...</section>` block.
+For a new guide with a structure similar to an existing one, copying the
+existing source file and replacing its text is often faster than starting from
+the archetype. Never paste analytics scripts or page-level `<style>` elements
+into a guide; those behaviors already belong to the Hugo theme.
+
+Do not edit generated files under `public/discipleship-guide/` or
+`public/discipleship-guides/`; they are overwritten by Hugo.
 
 ## Pre-deployment check
 
