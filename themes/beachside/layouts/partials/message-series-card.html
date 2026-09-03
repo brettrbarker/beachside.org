@@ -1,0 +1,5 @@
+{{ $message := .message }}
+<article class="series-message-card">
+  <h3><a href="{{ $message.RelPermalink }}">{{ $message.Title }}</a></h3>
+  {{ with $message.Description }}<p>{{ . | plainify | truncate 175 "" }}</p>{{ end }}
+</article>

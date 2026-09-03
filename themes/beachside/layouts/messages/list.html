@@ -3,10 +3,12 @@
   <header class="page-header"><h1>{{ .Title }}</h1></header>
   {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
   <div class="message-list">
-    {{ range .RegularPages.ByDate.Reverse }}
+    {{/* .Pages includes both one-off messages and branch sections used for multi-part series. */}}
+    {{ range .Pages.ByDate.Reverse }}
       <article class="message-row">
         <a class="message-art" href="{{ .RelPermalink }}">
-          {{ with .Params.image }}<img src="{{ . | relURL }}" alt="{{ $.Title }} artwork" loading="lazy">{{ else }}<span class="message-placeholder">Beachside Church</span>{{ end }}
+          {{ $messageTitle := .Title }}
+          {{ with .Params.image }}<img src="{{ . | relURL }}" alt="{{ $messageTitle }} artwork" loading="lazy">{{ else }}<span class="message-placeholder">Beachside Church</span>{{ end }}
         </a>
         <div class="message-summary">
           <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>

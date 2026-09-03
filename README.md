@@ -90,23 +90,47 @@ edit its display `text`, and set its destination `url` and link label
 `linkText`. Keep an external destination as a complete `https://` URL. If the
 banner is not needed, disable it instead of deleting its configuration.
 
-## Add the weekly message
+## Add messages and message series
 
-The `messages` archetype creates the expected front matter for a message. Use a
-date-prefixed, descriptive slug so files remain easy to sort:
+The message templates support both standalone messages and series with any
+number of parts. Each part has its own page and `video_url`. The series page is
+also Part 1, matching the structure of the original site.
+
+For a new multi-part series, create a branch bundle. Use a lowercase,
+hyphen-separated series slug:
+
+```sh
+hugo new content --kind message-series messages/built-to-last/_index.md
+```
+
+Hugo uses `archetypes/message-series.md` to create the series page. Edit
+`content/messages/built-to-last/_index.md` and replace both instances of
+`Series Title`. Complete the Part 1 speaker, description, artwork, video, and
+optional resource links. Leave `layout: series` and `part_number: 1` in place.
+
+To add Part 2, or any later weekly part, create a page inside that same series
+directory:
+
+```sh
+hugo new content --kind message-part messages/built-to-last/built-to-last-part-2.md
+```
+
+Hugo uses `archetypes/message-part.md`. Edit the new file, make `series` exactly
+match the series page, and set the correct `part_number`. Each part requires its
+own `video_url`; this is what makes the related links open a different video.
+The series navigation is generated automatically from every Markdown file in
+the directory, newest first, and excludes the page currently being viewed.
+Also update `lastmod` in the series `_index.md` to the new part's date; keep the
+series page's original `date` as the Part 1 date.
+
+For a one-week standalone message that will never have additional parts, use:
 
 ```sh
 hugo new content messages/YYYY-MM-DD-slug.md
 ```
 
-For example:
-
-```sh
-hugo new content messages/2026-09-06-built-to-last.md
-```
-
-Hugo uses `archetypes/messages.md` to create the file. Open the new file under
-`content/messages/` and complete these fields:
+The standalone command uses `archetypes/messages.md`. Whether editing a series
+or standalone message, complete the applicable fields:
 
 ```yaml
 ---
@@ -114,10 +138,12 @@ title: "Built to Last"
 date: 2026-09-06T09:00:00-05:00
 speaker: "Speaker Name"
 series: "Series Name"
+part_number: 2 # Multi-part series only
 description: "A short summary used on message cards and in search previews."
 image: "/images/messages/built-to-last.jpg"
 video_url: "https://www.youtube.com/watch?v=example"
 audio_url: "https://example.org/path/to/audio.mp3"
+guide_url: "https://example.org/path/to/discipleship-guide/"
 draft: true
 ---
 ```
@@ -127,13 +153,16 @@ Then:
 1. Add the artwork to `static/images/messages/` and make the `image` value
    match its public `/images/messages/...` path. Leave `image` empty only when
    no artwork is available.
-2. Use complete public URLs for `video_url` and `audio_url`. Leave either value
-   empty if that format is unavailable.
+2. Use complete public URLs for `video_url`, `audio_url`, and `guide_url`. A
+   YouTube watch URL or `youtu.be` URL is converted to a privacy-enhanced embed.
+   Leave either optional resource URL empty when it is unavailable.
 3. Add any longer notes or supporting links below the front matter in Markdown.
 4. Preview the message with the draft-enabled development command above.
 5. Check the title, date, speaker, series, media links, artwork crop, and message
    page on both narrow and wide screens.
-6. Change `draft` to `false`, run the production build, and deploy the new
+6. Follow every link under **Messages in This Series** and confirm that each
+   page loads its own title and video.
+7. Change `draft` to `false`, run the production build, and deploy the new
    `public/` output.
 
 Do not edit a generated file in `public/messages/`; Hugo will overwrite it on

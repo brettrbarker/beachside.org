@@ -1,0 +1,54 @@
+{{ $page := .page }}
+{{ $seriesPage := .seriesPage }}
+{{ $seriesTitle := $seriesPage.Title }}
+{{ if eq $seriesPage.Kind "section" }}
+  {{ $seriesTitle = $seriesPage.Params.series | default $seriesPage.Title }}
+{{ end }}
+{{ $parts := $seriesPage.RegularPages }}
+{{ $messageCount := add 1 (len $parts) }}
+
+<article class="message-single wrap">
+  <header class="message-header">
+    <h1>{{ $seriesTitle }}</h1>
+    {{ if eq $seriesPage.Kind "section" }}
+      <h2>{{ $page.Title }}</h2>
+    {{ end }}
+  </header>
+
+  {{ partial "message-video.html" $page }}
+
+  <div class="message-detail-grid">
+    <div class="message-body">
+      <h2>{{ $page.Title }}</h2>
+      <div class="message-meta">
+        {{ with $page.Params.speaker }}<span>{{ . }}</span>{{ end }}
+        {{ if not $page.Date.IsZero }}<time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "January 2, 2006" }}</time>{{ end }}
+      </div>
+      {{ if $page.Content }}
+        <div class="prose">{{ $page.Content }}</div>
+      {{ else }}
+        {{ with $page.Description }}<p class="message-description">{{ . }}</p>{{ end }}
+      {{ end }}
+      <div class="message-actions">
+        {{ with $page.Params.audio_url }}<a class="button button-dark" href="{{ . }}">Audio</a>{{ end }}
+        {{ with $page.Params.guide_url }}<a class="button button-dark" href="{{ . }}">Discipleship Guide</a>{{ end }}
+      </div>
+    </div>
+
+    {{ if gt $messageCount 1 }}
+      <aside class="series-messages" aria-labelledby="series-messages-title">
+        <h2 id="series-messages-title">Messages in This Series</h2>
+        <div class="series-message-list">
+          {{ range $parts.ByDate.Reverse }}
+            {{ if ne .RelPermalink $page.RelPermalink }}
+              {{ partial "message-series-card.html" (dict "message" .) }}
+            {{ end }}
+          {{ end }}
+          {{ if ne $seriesPage.RelPermalink $page.RelPermalink }}
+            {{ partial "message-series-card.html" (dict "message" $seriesPage) }}
+          {{ end }}
+        </div>
+      </aside>
+    {{ end }}
+  </div>
+</article>

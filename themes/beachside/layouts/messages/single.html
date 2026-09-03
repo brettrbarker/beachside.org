@@ -1,27 +1,7 @@
 {{ define "main" }}
-<article class="message-single wrap">
-  <header class="message-header">
-    {{ with .Params.series }}<p class="eyebrow">{{ . }}</p>{{ end }}
-    <h1>{{ .Title }}</h1>
-    <div class="message-meta">
-      {{ with .Params.speaker }}<span>{{ . }}</span>{{ end }}
-      {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ end }}
-    </div>
-  </header>
-
-  {{ with .Params.video_url }}
-    {{ $embed := . }}
-    {{ if strings.Contains . "youtube.com/watch" }}{{ $embed = replaceRE `^.*[?&]v=([^&]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}{{ end }}
-    {{ if strings.Contains . "youtu.be/" }}{{ $embed = replaceRE `^.*youtu\.be/([^?&/]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}{{ end }}
-    <div class="video-frame message-video"><iframe src="{{ $embed }}" title="{{ $.Title }} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-  {{ else }}
-    {{ with .Params.image }}<img class="message-hero-image" src="{{ . | relURL }}" alt="{{ $.Title }} artwork">{{ end }}
-  {{ end }}
-
-  <div class="message-body">
-    {{ with .Description }}<p class="message-description">{{ . }}</p>{{ end }}
-    {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
-    {{ with .Params.audio_url }}<div class="message-audio"><h2>Listen</h2><audio controls preload="metadata" src="{{ . }}">Your browser does not support audio playback.</audio></div>{{ end }}
-  </div>
-</article>
+{{ $seriesPage := . }}
+{{ if and .Params.part_number (eq .Parent.Layout "series") }}
+  {{ $seriesPage = .Parent }}
+{{ end }}
+{{ partial "message-detail.html" (dict "page" . "seriesPage" $seriesPage) }}
 {{ end }}

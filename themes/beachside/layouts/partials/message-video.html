@@ -1,0 +1,14 @@
+{{ $page := . }}
+{{ with $page.Params.video_url }}
+  {{ $embed := . }}
+  {{ if strings.Contains . "youtube.com/watch" }}
+    {{ $embed = replaceRE `^.*[?&]v=([^&]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}
+  {{ else if strings.Contains . "youtu.be/" }}
+    {{ $embed = replaceRE `^.*youtu\.be/([^?&/]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}
+  {{ end }}
+  <div class="video-frame message-video">
+    <iframe src="{{ $embed }}" title="{{ $page.Title }} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+{{ else }}
+  {{ with $page.Params.image }}<img class="message-hero-image" src="{{ . | relURL }}" alt="{{ $page.Title }} artwork">{{ end }}
+{{ end }}
