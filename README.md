@@ -191,9 +191,10 @@ resources. Open the new file under `content/discipleship-guide/` and:
    front matter. The archive sorts by `date` and creates series filters from the
    exact `series` values. Add `display_series: true` only when the series name
    should also appear in the guide's dark title panel; omit it otherwise.
-2. Replace the placeholder copy inside each HTML content block. Keep the
-   existing `dg-...` class names because they provide the card layout and
-   responsive styling.
+2. Replace the placeholder copy in each section, but keep the outer card/wrapper
+   structure intact so the page keeps the existing `dg-...` styling. The
+   content itself should be written in normal Markdown paragraphs, lists, and
+   blockquotes instead of deep nested HTML markup.
 3. In the devotion tabs, keep each button's `data-day` matched to its panel ID,
    such as `data-day="monday"` and `id="devo-monday"`. The theme handles tab
    switching and keyboard focus without page-specific scripts.
@@ -205,8 +206,10 @@ resources. Open the new file under `content/discipleship-guide/` and:
 To omit a section, delete its entire enclosing `<section>...</section>` block.
 For a new guide with a structure similar to an existing one, copying the
 existing source file and replacing its text is often faster than starting from
-the archetype. Never paste analytics scripts or page-level `<style>` elements
-into a guide; those behaviors already belong to the Hugo theme.
+the archetype. Keep the wrapper HTML light and simple; don't add extra nested
+`<div>` blocks unless the layout truly needs them. Never paste analytics scripts
+or page-level `<style>` elements into a guide; those behaviors already belong to
+the Hugo theme.
 
 Do not edit generated files under `public/discipleship-guide/` or
 `public/discipleship-guides/`; they are overwritten by Hugo.

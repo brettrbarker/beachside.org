@@ -1,0 +1,45 @@
+name: Import discipleship guide
+
+on:
+  workflow_dispatch:
+    inputs:
+      json_path:
+        description: Path to the JSON import file in the repository
+        required: true
+        default: imports/example-discipleship-guide-import.json
+      output_dir:
+        description: Directory to write the generated guide markdown file
+        required: true
+        default: content/discipleship-guide
+
+jobs:
+  import-guide:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate guide from JSON
+        run: |
+          python scripts/import_discipleship_guide.py \
+            --input "${{ github.event.inputs.json_path }}" \
+            --output-dir "${{ github.event.inputs.output_dir }}"
+
+      - name: Commit generated guide
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ github.event.inputs.output_dir }}"
+          if git diff --cached --quiet; then
+            echo "No guide changes to commit."
+          else
+            git commit -m "Add imported discipleship guide"
+            git push
+          fi

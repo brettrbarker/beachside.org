@@ -1,0 +1,38 @@
+{
+  "title": "Message Title",
+  "fields": {
+    "message_title": "Message Title",
+    "guide_date": "2025-06-01",
+    "youtube_link": "https://www.youtube.com/watch?v=example",
+    "message_recap": "<p>HTML content here...</p>",
+    "main_idea": "One sentence big idea displayed as pull quote.",
+    "discussion_questions": [
+      {
+        "question": "Your question here?",
+        "question_scripture": "John 3:16"
+      }
+    ],
+    "daily_devotions": {
+      "monday": { "scripture": "Psalm 23:3", "reflection": "<p>HTML...</p>" },
+      "tuesday": { "scripture": "Ezekiel 36:26", "reflection": "<p>HTML...</p>" },
+      "wednesday": { "scripture": "1 Cor 15:53", "reflection": "<p>HTML...</p>" },
+      "thursday": { "scripture": "2 Cor 4:16", "reflection": "<p>HTML...</p>" },
+      "friday": { "scripture": "Matthew 5:16", "reflection": "<p>HTML...</p>" }
+    },
+    "spiritual_practice": "<p>HTML content here...</p>",
+    "prayer_prompts": [
+      { "prompt": "Prayer prompt text here." }
+    ],
+    "next_steps": [
+      { "step": "Next step description here." }
+    ],
+    "resources": [
+      {
+        "title": "Resource Name",
+        "url": "https://example.com",
+        "description": "Short description."
+      }
+    ],
+    "series": "Series Name (optional)"
+  }
+}
