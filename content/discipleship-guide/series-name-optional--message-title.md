@@ -1,10 +1,10 @@
 ---
 title: "Message Title"
-date: 2026-09-01T09:00:00-05:00
+date: 2025-06-01T09:00:00-05:00
 speaker: ""
 series: "Series Name (optional)"
 description: "One sentence big idea displayed as pull quote."
-draft: false
+draft: true
 ---
 
 <div class="dg-wrap">

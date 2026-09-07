@@ -214,6 +214,52 @@ the Hugo theme.
 Do not edit generated files under `public/discipleship-guide/` or
 `public/discipleship-guides/`; they are overwritten by Hugo.
 
+## Import a discipleship guide from JSON
+
+A structured JSON import flow is available for creating new discipleship guide
+files from a consistent payload rather than hand-writing the full guide HTML.
+Keep your source JSON files in `imports/discipleship-guide/` and name them with a
+clear slug such as `example-discipleship-guide-import.json`.
+
+From the repository root, run the importer directly with:
+
+```sh
+python scripts/import_discipleship_guide.py \
+  --input imports/discipleship-guide/example-discipleship-guide-import.json \
+  --output-dir content/discipleship-guide \
+  --force
+```
+
+The script reads the input JSON, validates the expected fields, converts any
+YouTube watch URL into an embed URL, and writes a Hugo Markdown guide file to the
+`content/discipleship-guide/` directory. The generated file uses the guide title
+and, when present, the series name to create a slug, for example:
+
+```text
+series-name-optional--message-title.md
+```
+
+The importer is intentionally safe by default: if the generated file already
+exists, it exits without overwriting it. Add `--force` only when you mean to
+replace the existing guide file with a fresh import.
+
+To use the GitHub Actions workflow instead, open the repo in GitHub and run the
+`Import discipleship guide` action from the Actions tab. The workflow is set to
+default to `imports/discipleship-guide/example-discipleship-guide-import.json`,
+but you can change the `json_path` input to point at another import file in the
+repository before running it.
+
+The workflow performs these steps automatically:
+
+1. Checks out the repository.
+2. Sets up Python 3.12.
+3. Runs the importer script with your selected JSON file.
+4. Commits any newly generated guide file back to the repository.
+5. Pushes the commit to the branch.
+
+This is a good fit for repeatable guide creation when a message series will have
+many guides with the same structure.
+
 ## Pre-deployment check
 
 Before copying a release, run the production build and review its output for

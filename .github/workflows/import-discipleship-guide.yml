@@ -6,7 +6,7 @@ on:
       json_path:
         description: Path to the JSON import file in the repository
         required: true
-        default: imports/example-discipleship-guide-import.json
+        default: imports/discipleship-guide/example-discipleship-guide-import.json
       output_dir:
         description: Directory to write the generated guide markdown file
         required: true
