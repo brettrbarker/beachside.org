@@ -17,7 +17,10 @@ hugo server --disableFastRender
 
 Open the local address printed by Hugo, normally
 <http://localhost:1313/>. Hugo watches the source files and refreshes the site
-as they change. Draft content is hidden by default; include it while reviewing
+as they change. For the browser-based CMS, open
+<http://localhost:1313/admin/>. The Decap-powered admin works against the same
+Markdown files in `content/` and is configured for the message content model
+first. Draft content is hidden by default; include it while reviewing
 unpublished work with:
 
 ```sh
