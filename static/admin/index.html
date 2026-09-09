@@ -66,6 +66,16 @@
       <div class="tag">Beachside Church</div>
       <h1>Content Editor</h1>
       <p>Use this admin view to add and update messages for the church website.</p>
+
+      <div id="identity-diag" style="margin-top:1rem;font-size:0.95rem;color:var(--muted)">
+        <div><strong>Netlify Identity status:</strong> <span id="identity-status">Checking…</span></div>
+        <div style="margin-top:0.5rem;">
+          <button id="identity-refresh" style="padding:0.35rem 0.6rem;border-radius:6px;border:1px solid rgba(13,90,102,0.12);background:#fff;color:var(--accent);cursor:pointer">Refresh</button>
+          <a id="identity-admin-link" href="/admin/" style="margin-left:0.8rem;color:var(--accent);text-decoration:underline;">Open admin</a>
+        </div>
+        <pre id="identity-body" style="margin-top:0.75rem;padding:0.6rem;border-radius:8px;background:#f7fafb;color:#0b4954;display:none;max-height:220px;overflow:auto"></pre>
+        <div id="identity-hash" style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem"></div>
+      </div>
     </main>
 
     <!-- Netlify Identity widget: handles invite confirmations and logins -->
@@ -89,7 +99,7 @@
           // confirmation redirects to the site with a token in the URL.
           window.netlifyIdentity.on('login', () => {
             // Remove the fragment token from the URL for cleanliness after handled
-            if (window.location.hash && window.location.hash.indexOf('access_token') !== -1) {
+            if (window.location.hash && (window.location.hash.indexOf('access_token') !== -1 || window.location.hash.indexOf('confirmation_token') !== -1)) {
               history.replaceState(null, '', window.location.pathname + window.location.search);
             }
             // Reload admin so Decap picks up the authenticated session
@@ -103,6 +113,50 @@
           //   window.netlifyIdentity.open();
           // }
         }
+      })();
+    </script>
+
+    <script>
+      // Diagnostic fetch of /.netlify/identity/ to help debug 404/401 issues.
+      (function () {
+        const statusEl = document.getElementById('identity-status');
+        const bodyEl = document.getElementById('identity-body');
+        const refreshBtn = document.getElementById('identity-refresh');
+        const hashEl = document.getElementById('identity-hash');
+
+        async function check() {
+          statusEl.textContent = 'Checking…';
+          bodyEl.style.display = 'none';
+          try {
+            const res = await fetch('/.netlify/identity/');
+            statusEl.textContent = `${res.status} ${res.statusText}`;
+            const text = await res.text();
+            if (text && text.trim()) {
+              bodyEl.style.display = 'block';
+              const snippet = text.length > 2000 ? text.slice(0,2000) + '\n\n...(truncated)' : text;
+              bodyEl.textContent = snippet;
+            }
+            if (res.status === 404) {
+              statusEl.textContent += ' — Identity not enabled on this site';
+            } else if (res.status === 401) {
+              statusEl.textContent += ' — endpoint reachable; authentication required (expected)';
+            }
+          } catch (err) {
+            statusEl.textContent = 'Error: ' + err.message;
+          }
+
+          // show any hash fragments (access_token or confirmation_token)
+          const hash = window.location.hash || '';
+          if (hash) {
+            hashEl.textContent = `URL fragment: ${hash}`;
+          } else {
+            hashEl.textContent = '';
+          }
+        }
+
+        refreshBtn.addEventListener('click', check);
+        // Run once on load
+        check();
       })();
     </script>
 
