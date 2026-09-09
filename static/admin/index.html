@@ -258,6 +258,46 @@
             console.warn('Netlify Identity failed to initialize:', e);
           }
 
+          // After init, if the URL hash contains an invite/recovery token, attempt
+          // to accept it programmatically and open the signup flow so the user can
+          // set a password. Different Netlify Identity widget versions expose
+          // acceptInvite or require opening the signup modal — handle both.
+          (function handleHashTokens() {
+            try {
+              const hash = window.location.hash || '';
+              const match = hash.match(/(?:confirmation_token|recovery_token|access_token)=([^&]+)/);
+              if (!match) return;
+              const token = decodeURIComponent(match[1]);
+
+              // If acceptInvite exists, use it (invokes invite acceptance flow)
+              if (typeof window.netlifyIdentity.acceptInvite === 'function') {
+                try {
+                  window.netlifyIdentity.acceptInvite(token);
+                } catch (e) {
+                  // ignore and fallback
+                }
+              }
+
+              // Open the signup modal as a fallback so the user can choose a password
+              if (typeof window.netlifyIdentity.open === 'function') {
+                // 'signup' is supported by the widget; if not, default to generic open()
+                try {
+                  window.netlifyIdentity.open('signup');
+                } catch (e) {
+                  window.netlifyIdentity.open();
+                }
+              }
+
+              // Clean the URL hash to avoid leaking tokens in history
+              if (window.location.hash) {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+              }
+            } catch (err) {
+              // eslint-disable-next-line no-console
+              console.warn('Error handling identity token from URL hash', err);
+            }
+          })();
+
           // When a user logs in, navigate to the admin root so the CMS can load the
           // authenticated session and collections. This helps after an email
           // confirmation redirects to the site with a token in the URL.

@@ -60,6 +60,33 @@
         console.warn('Netlify Identity failed to initialize:', e);
       }
 
+      // After init, if the URL hash contains an invite/recovery token, attempt
+      // to accept it programmatically so the user can set a password. Fallback
+      // to opening the signup modal if acceptInvite is not available.
+      (function handleHashTokens() {
+        try {
+          const hash = window.location.hash || '';
+          const match = hash.match(/(?:confirmation_token|recovery_token|access_token)=([^&]+)/);
+          if (!match) return;
+          const token = decodeURIComponent(match[1]);
+
+          if (typeof window.netlifyIdentity.acceptInvite === 'function') {
+            try { window.netlifyIdentity.acceptInvite(token); } catch (e) { /* ignore */ }
+          }
+
+          if (typeof window.netlifyIdentity.open === 'function') {
+            try { window.netlifyIdentity.open('signup'); } catch (e) { window.netlifyIdentity.open(); }
+          }
+
+          if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn('Error handling identity token from URL hash', err);
+        }
+      })();
+
       // If the user confirmed via email and the URL contains the token fragment,
       // the widget processes it and triggers a login event. Redirect to /admin
       // when login completes so the CMS can pick up the authenticated session.
