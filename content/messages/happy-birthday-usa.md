@@ -24,4 +24,4 @@ aliases:
   - /messages/happy-birthday-usa/
 speaker: Andy Stanley
 ---
-......
+
