@@ -69,14 +69,150 @@
 
       <div id="identity-diag" style="margin-top:1rem;font-size:0.95rem;color:var(--muted)">
         <div><strong>Netlify Identity status:</strong> <span id="identity-status">Checking…</span></div>
-        <div style="margin-top:0.5rem;">
+        <div style="margin-top:0.5rem;display:flex;gap:0.6rem;align-items:center;">
           <button id="identity-refresh" style="padding:0.35rem 0.6rem;border-radius:6px;border:1px solid rgba(13,90,102,0.12);background:#fff;color:var(--accent);cursor:pointer">Refresh</button>
+          <button id="identity-login" style="padding:0.35rem 0.6rem;border-radius:6px;border:1px solid rgba(13,90,102,0.12);background:#0d5a66;color:#fff;cursor:pointer">Open Login</button>
+          <button id="identity-logout" style="padding:0.35rem 0.6rem;border-radius:6px;border:1px solid rgba(13,90,102,0.12);background:#fff;color:var(--accent);cursor:pointer">Logout</button>
           <a id="identity-admin-link" href="/admin/" style="margin-left:0.8rem;color:var(--accent);text-decoration:underline;">Open admin</a>
         </div>
-        <pre id="identity-body" style="margin-top:0.75rem;padding:0.6rem;border-radius:8px;background:#f7fafb;color:#0b4954;display:none;max-height:220px;overflow:auto"></pre>
+        <div style="margin-top:0.6rem;display:flex;gap:0.5rem;align-items:center;">
+          <button id="identity-show-user" style="padding:0.25rem 0.5rem;border-radius:6px;border:1px solid rgba(13,90,102,0.06);background:#fff;color:var(--accent);cursor:pointer">Show current user</button>
+          <button id="identity-clear" style="padding:0.25rem 0.5rem;border-radius:6px;border:1px solid rgba(13,90,102,0.06);background:#fff;color:var(--accent);cursor:pointer">Clear session storage</button>
+          <button id="identity-show-cookies" style="padding:0.25rem 0.5rem;border-radius:6px;border:1px solid rgba(13,90,102,0.06);background:#fff;color:var(--accent);cursor:pointer">Show cookies</button>
+        </div>
+        <div style="margin-top:0.6rem;">
+          <label for="manual-token">Manual token (paste confirmation or access token):</label>
+          <div style="display:flex;gap:0.4rem;margin-top:0.25rem;">
+            <input id="manual-token" placeholder="paste token fragment (without #)" style="flex:1;padding:0.45rem;border-radius:6px;border:1px solid rgba(13,90,102,0.08);" />
+            <button id="identity-manual-accept" style="padding:0.35rem 0.6rem;border-radius:6px;border:1px solid rgba(13,90,102,0.12);background:#0d5a66;color:#fff;cursor:pointer">Accept token</button>
+          </div>
+          <div style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem">If invite links are being stripped by email clients, paste the fragment (e.g. confirmation_token=...) here and click Accept token.</div>
+        </div>
+        <pre id="identity-body" style="margin-top:0.75rem;padding:0.6rem;border-radius:8px;background:#f7fafb;color:#0b4954;display:none;max-height:300px;overflow:auto"></pre>
         <div id="identity-hash" style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem"></div>
       </div>
     </main>
+
+    <script>
+      // Extra interactive diagnostics and helpers
+      (function () {
+        const statusEl = document.getElementById('identity-status');
+        const bodyEl = document.getElementById('identity-body');
+        const refreshBtn = document.getElementById('identity-refresh');
+        const loginBtn = document.getElementById('identity-login');
+        const logoutBtn = document.getElementById('identity-logout');
+        const showUserBtn = document.getElementById('identity-show-user');
+        const clearBtn = document.getElementById('identity-clear');
+        const showCookiesBtn = document.getElementById('identity-show-cookies');
+        const manualAccept = document.getElementById('identity-manual-accept');
+        const manualInput = document.getElementById('manual-token');
+        const hashEl = document.getElementById('identity-hash');
+
+        async function check() {
+          statusEl.textContent = 'Checking…';
+          bodyEl.style.display = 'none';
+          try {
+            const res = await fetch('/.netlify/identity/');
+            statusEl.textContent = `${res.status} ${res.statusText}`;
+            const text = await res.text();
+            if (text && text.trim()) {
+              bodyEl.style.display = 'block';
+              const snippet = text.length > 2000 ? text.slice(0,2000) + '\n\n...(truncated)' : text;
+              bodyEl.textContent = snippet;
+            }
+            if (res.status === 404) {
+              statusEl.textContent += ' — Identity not enabled on this site';
+            } else if (res.status === 401) {
+              statusEl.textContent += ' — endpoint reachable; authentication required (expected)';
+            }
+          } catch (err) {
+            statusEl.textContent = 'Error: ' + err.message;
+          }
+
+          const hash = window.location.hash || '';
+          if (hash) {
+            hashEl.textContent = `URL fragment: ${hash}`;
+          } else {
+            hashEl.textContent = '';
+          }
+        }
+
+        refreshBtn.addEventListener('click', check);
+
+        loginBtn.addEventListener('click', () => {
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.open('login');
+          } else {
+            alert('Netlify Identity widget not loaded');
+          }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.logout();
+            setTimeout(() => {
+              // clear any cached state
+              try { localStorage.removeItem('nf_jwt'); } catch (e) {}
+              try { localStorage.removeItem('netlifyIdentity'); } catch (e) {}
+              check();
+            }, 300);
+          } else {
+            alert('Netlify Identity widget not loaded');
+          }
+        });
+
+        showUserBtn.addEventListener('click', () => {
+          if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+            const u = window.netlifyIdentity.currentUser();
+            bodyEl.style.display = 'block';
+            bodyEl.textContent = JSON.stringify(u, null, 2);
+          } else {
+            bodyEl.style.display = 'block';
+            bodyEl.textContent = 'No current user';
+          }
+        });
+
+        clearBtn.addEventListener('click', () => {
+          try { localStorage.clear(); } catch (e) {}
+          try { sessionStorage.clear(); } catch (e) {}
+          bodyEl.style.display = 'block';
+          bodyEl.textContent = 'Cleared localStorage and sessionStorage. You may also need to clear cookies.';
+          check();
+        });
+
+        showCookiesBtn.addEventListener('click', () => {
+          bodyEl.style.display = 'block';
+          bodyEl.textContent = document.cookie || '(no cookies)';
+        });
+
+        manualAccept.addEventListener('click', async () => {
+          const token = (manualInput.value || '').trim();
+          if (!token) { alert('Paste the token fragment text (confirmation_token=... or access_token=...)'); return; }
+          // Try to accept invite programmatically by calling the verify endpoint
+          try {
+            const url = '/.netlify/identity/verify';
+            const res = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token })
+            });
+            const text = await res.text();
+            bodyEl.style.display = 'block';
+            bodyEl.textContent = `Status ${res.status} ${res.statusText}\n\n${text}`;
+            if (res.ok) {
+              // reload to pick up authenticated state
+              setTimeout(() => { window.location.href = '/admin/'; }, 1000);
+            }
+          } catch (err) {
+            bodyEl.style.display = 'block';
+            bodyEl.textContent = 'Error calling verify endpoint: ' + err.message;
+          }
+        });
+
+        // run check on load
+        check();
+      })();
+    </script>
 
     <!-- Netlify Identity widget: handles invite confirmations and logins -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
