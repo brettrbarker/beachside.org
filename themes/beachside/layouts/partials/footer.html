@@ -47,3 +47,28 @@
     <a href="{{ "/privacy-policy/" | relURL }}">Privacy Policy</a>
   </div>
 </footer>
+
+<!-- Netlify Identity: load widget and initialize so invite confirmation tokens are handled site-wide -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  (function () {
+    if (window.netlifyIdentity) {
+      try {
+        window.netlifyIdentity.init();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('Netlify Identity failed to initialize:', e);
+      }
+
+      // If the user confirmed via email and the URL contains the token fragment,
+      // the widget processes it and triggers a login event. Redirect to /admin
+      // when login completes so the CMS can pick up the authenticated session.
+      window.netlifyIdentity.on('login', () => {
+        if (window.location.hash && window.location.hash.indexOf('access_token') !== -1) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+        window.location.href = '/admin/';
+      });
+    }
+  })();
+</script>
