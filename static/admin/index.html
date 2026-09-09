@@ -88,6 +88,14 @@
           </div>
           <div style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem">If invite links are being stripped by email clients, paste the fragment (e.g. confirmation_token=...) here and click Accept token.</div>
         </div>
+        <div style="margin-top:0.8rem;">
+          <label for="recovery-email">Send password recovery email:</label>
+          <div style="display:flex;gap:0.4rem;margin-top:0.25rem;">
+            <input id="recovery-email" placeholder="email@domain.org" style="flex:1;padding:0.45rem;border-radius:6px;border:1px solid rgba(13,90,102,0.08);" />
+            <button id="identity-send-recovery" style="padding:0.35rem 0.6rem;border-radius:6px;border:1px solid rgba(13,90,102,0.12);background:#fff;color:var(--accent);cursor:pointer">Send recovery email</button>
+          </div>
+          <div style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem">Use this to send a password reset email via Netlify Identity (useful if invite flows didn't allow setting a password).</div>
+        </div>
         <pre id="identity-body" style="margin-top:0.75rem;padding:0.6rem;border-radius:8px;background:#f7fafb;color:#0b4954;display:none;max-height:300px;overflow:auto"></pre>
         <div id="identity-hash" style="margin-top:0.5rem;color:var(--muted);font-size:0.85rem"></div>
       </div>
@@ -206,6 +214,26 @@
           } catch (err) {
             bodyEl.style.display = 'block';
             bodyEl.textContent = 'Error calling verify endpoint: ' + err.message;
+          }
+        });
+
+        // send password recovery email
+        document.getElementById('identity-send-recovery').addEventListener('click', async () => {
+          const email = (document.getElementById('recovery-email').value || '').trim();
+          if (!email) { alert('Enter an email address to send recovery to'); return; }
+          try {
+            const res = await fetch('/.netlify/identity/recovery', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email })
+            });
+            const text = await res.text();
+            bodyEl.style.display = 'block';
+            bodyEl.textContent = `Recovery email request: ${res.status} ${res.statusText}\n\n${text}`;
+            alert('If the address exists, a recovery email was requested — check the inbox.');
+          } catch (err) {
+            bodyEl.style.display = 'block';
+            bodyEl.textContent = 'Error requesting recovery: ' + err.message;
           }
         });
 
