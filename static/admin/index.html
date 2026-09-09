@@ -68,6 +68,44 @@
       <p>Use this admin view to add and update messages for the church website.</p>
     </main>
 
+    <!-- Netlify Identity widget: handles invite confirmations and logins -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      // Initialize Netlify Identity if available. This processes email confirmation
+      // tokens when the user lands on the site and exposes the login UI used by
+      // Decap CMS (git-gateway backend).
+      (function () {
+        if (window.netlifyIdentity) {
+          try {
+            window.netlifyIdentity.init();
+          } catch (e) {
+            // Some older browsers or CSP restrictions might block init; log a helpful message.
+            // eslint-disable-next-line no-console
+            console.warn('Netlify Identity failed to initialize:', e);
+          }
+
+          // When a user logs in, navigate to the admin root so the CMS can load the
+          // authenticated session and collections. This helps after an email
+          // confirmation redirects to the site with a token in the URL.
+          window.netlifyIdentity.on('login', () => {
+            // Remove the fragment token from the URL for cleanliness after handled
+            if (window.location.hash && window.location.hash.indexOf('access_token') !== -1) {
+              history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
+            // Reload admin so Decap picks up the authenticated session
+            window.location.href = '/admin/';
+          });
+
+          // Optional: open the identity modal when the admin page loads and there's
+          // no user, prompting the editor to sign in. Comment out if you prefer
+          // users click the login button manually.
+          // if (!window.netlifyIdentity.currentUser()) {
+          //   window.netlifyIdentity.open();
+          // }
+        }
+      })();
+    </script>
+
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </body>
 </html>
