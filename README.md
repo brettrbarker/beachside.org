@@ -29,6 +29,58 @@ hugo server --disableFastRender --buildDrafts
 
 Stop the server with `Ctrl+C`.
 
+## CMS accounts and password recovery
+
+The editor at `/admin/` uses Decap CMS with Netlify Identity and Git Gateway.
+Enable both services on the Netlify project connected to this repository, use
+invite-only registration for editors, and ensure Git Gateway targets the `main`
+branch. The configured `/.netlify/identity` and `/.netlify/git` endpoints must be
+available on the hostname used to open the editor. Copying the static site to
+another host does not provide these services automatically.
+
+To reset a password, open `/admin/`, open the Netlify login dialog, and choose
+**Forgot password?**. An administrator can also send a reset email from the
+project's Netlify Identity user settings. Keep the default email link using
+`{{ .ConfirmationURL }}`: landing on the homepage with `#recovery_token=...`
+is expected. The homepage loads the Identity widget, which verifies the token
+and displays **Update password**. After the password is saved, the editor opens.
+Invitation links similarly display a form to choose an initial password.
+Links directed to `/admin/` also work; no custom email template is required.
+
+The widget initializes itself on `DOMContentLoaded` and reads the token when
+its iframe loads. Do not manually initialize it again, clear the URL fragment,
+or force the signup/login dialog while an email callback is pending. Recovery,
+invitation, and confirmation tokens have different meanings. Decap handles
+admin login in place; the public site's login listener redirects new logins to
+`/admin/` without redirecting already signed-in visitors on page load.
+
+After deploying authentication changes, request a fresh reset email and test it
+in a private browser window. Confirm that **Update password** appears, save a
+new password, then sign out and sign back in with that password. Expired or
+previously used links require a fresh email. These checks need the deployed
+Identity service; Hugo's development server alone cannot send email or reset
+accounts.
+
+Browser regression checks exercise the generated homepage and admin page with
+the actual widget and a mocked Identity API. They cover recovery submission,
+invitations, expired tokens, recovery-email requests, and normal page loads:
+
+```sh
+hugo --gc --minify
+python -m venv /tmp/beachside-cms-tests
+/tmp/beachside-cms-tests/bin/pip install playwright
+/tmp/beachside-cms-tests/bin/playwright install chromium
+curl -fsSL https://identity.netlify.com/v1/netlify-identity-widget.js \
+  -o /tmp/beachside-identity-widget.js
+/tmp/beachside-cms-tests/bin/python scripts/test_cms_identity.py \
+  --widget-script /tmp/beachside-identity-widget.js
+```
+
+Pass `--browser /path/to/chrome` to use an existing Chrome/Chromium installation.
+The tests intercept all browser requests and never send real emails or modify
+real accounts. See the [Decap Identity setup guide](https://decapcms.org/docs/choosing-a-backend/)
+and [Netlify email documentation](https://docs.netlify.com/manage/security/secure-access-to-sites/identity/identity-generated-emails/).
+
 ## Build and deploy
 
 Create an optimized production build from the repository root:
