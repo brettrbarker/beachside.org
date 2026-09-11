@@ -69,15 +69,18 @@ collections:
 
   - name: "redirects"
     label: "Redirects"
-    file: "netlify.toml"
-    format: "toml"
-    fields:
-      - name: "redirects"
+    files:
+      - file: "netlify.toml"
+        name: "redirects"
         label: "Redirects"
-        widget: "list"
-        summary: "{{fields.from}} → {{fields.to}}"
+        format: "toml"
         fields:
-          - { label: "From", name: "from", widget: "string" }
-          - { label: "To", name: "to", widget: "string" }
-          - { label: "Status", name: "status", widget: "number", valueType: "int", default: 301 }
-          - { label: "Force", name: "force", widget: "boolean", default: true }
+          - label: "Redirect rules"
+            name: "redirects"
+            widget: "list"
+            summary: "{{fields.from}} → {{fields.to}}"
+            fields:
+              - { label: "From", name: "from", widget: "string" }
+              - { label: "To", name: "to", widget: "string" }
+              - { label: "Status", name: "status", widget: "number", valueType: "int", default: 301 }
+              - { label: "Force", name: "force", widget: "boolean", default: true }
