@@ -66,3 +66,18 @@ collections:
       - { label: "Guide URL", name: "guide_url", widget: "string", required: false }
       - { label: "Draft", name: "draft", widget: "boolean", default: true }
       - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "redirects"
+    label: "Redirects"
+    file: "netlify.toml"
+    format: "toml"
+    fields:
+      - name: "redirects"
+        label: "Redirects"
+        widget: "list"
+        summary: "{{fields.from}} → {{fields.to}}"
+        fields:
+          - { label: "From", name: "from", widget: "string" }
+          - { label: "To", name: "to", widget: "string" }
+          - { label: "Status", name: "status", widget: "number", valueType: "int", default: 301 }
+          - { label: "Force", name: "force", widget: "boolean", default: true }
