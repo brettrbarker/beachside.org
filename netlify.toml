@@ -1,13 +1,11 @@
 [[redirects]]
-  from = "/admin1"
-  to = "/admin/"
-  status = 301
-  force = true
+from = "/admin1"
+to = "/admin/"
+status = 301
+force = true
 
-# Add more redirects here as needed. Netlify will apply them in order.
-# Example:
-# [[redirects]]
-#   from = "/messages/old-series"
-#   to = "/messages/new-series/"
-#   status = 301
-#   force = true
+[[redirects]]
+status = 302
+force = true
+from = "/test"
+to = "https://beachside.org"
