@@ -1,0 +1,65 @@
+<div class="dg-wrap">
+  {{ with .Params.video_url }}
+    {{ $embed := . }}
+    {{ if strings.Contains . "youtube.com/watch" }}
+      {{ $embed = replaceRE `^.*[?&]v=([^&]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}
+    {{ else if strings.Contains . "youtu.be/" }}
+      {{ $embed = replaceRE `^.*youtu\.be/([^?&/]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}
+    {{ end }}
+    <section class="dg-card dg-card--flush"><div class="dg-video"><iframe src="{{ $embed }}" title="Message video" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div></section>
+  {{ end }}
+  {{ with .Params.message_recap }}
+    <section class="dg-card"><h2 class="dg-label">Message Recap</h2><div class="dg-prose">{{ . | markdownify }}</div></section>
+  {{ end }}
+  {{ with .Params.main_idea }}
+    <aside class="dg-big-idea"><div class="dg-big-idea-label">Main Idea</div><blockquote>{{ . | markdownify }}</blockquote></aside>
+  {{ end }}
+  {{ with .Params.discussion_questions }}
+    <section class="dg-card"><h2 class="dg-label">Group Discussion Questions</h2><ol class="dg-q-list">
+      {{ range $index, $question := . }}
+        <li><div class="dg-q-num">{{ add $index 1 }}</div><div class="dg-q-body">{{ .question | markdownify }}{{ with .question_scripture }}<div class="dg-q-scripture">{{ . | markdownify }}</div>{{ end }}</div></li>
+      {{ end }}
+    </ol></section>
+  {{ end }}
+  {{ $devotions := slice }}
+  {{ range .Params.daily_devotions }}
+    {{ if or .scripture .reflection }}{{ $devotions = $devotions | append . }}{{ end }}
+  {{ end }}
+  {{ with $devotions }}
+    <section class="dg-card dg-card--devo"><h2 class="dg-label">Daily Devotions</h2>
+      <div class="dg-devo-tabs" role="tablist" aria-label="Daily devotions">
+        {{ range $index, $devotion := . }}<button class="dg-devo-tab{{ if eq $index 0 }} active{{ end }}" data-day="{{ $index }}">{{ .day }}</button>{{ end }}
+      </div>
+      <div class="dg-devo-panels">
+        {{ range $index, $devotion := . }}
+          <section class="dg-devo-panel{{ if eq $index 0 }} active{{ end }}" id="devo-{{ $index }}">
+            {{ with .scripture }}<a class="dg-devo-scripture-pill" href="{{ $devotion.scripture_url | default "https://www.bible.com/" }}" target="_blank" rel="noopener">📖 {{ . }}</a>{{ end }}
+            {{ with .reflection }}<div class="dg-prose">{{ . | markdownify }}</div>{{ end }}
+          </section>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+  {{ with .Params.spiritual_practice }}
+    <section class="dg-card"><h2 class="dg-label">Spiritual Practice</h2><div class="dg-practice-inner dg-prose">{{ . | markdownify }}</div></section>
+  {{ end }}
+  {{ with .Params.prayer_prompts }}
+    <section class="dg-card"><h2 class="dg-label">Prayer Prompts</h2><ul class="dg-prayer-list">
+      {{ range . }}<li><div class="dg-prayer-dot"></div><span>{{ .prompt | markdownify }}</span></li>{{ end }}
+    </ul></section>
+  {{ end }}
+  {{ with .Params.next_steps }}
+    <section class="dg-card--teal"><h2 class="dg-label">Next Steps</h2><ul class="dg-steps-list">
+      {{ range . }}<li><div class="dg-step-chip">→</div><span>{{ .step | markdownify }}</span></li>{{ end }}
+    </ul></section>
+  {{ end }}
+  {{ with .Params.resources }}
+    <section class="dg-card"><h2 class="dg-label">Resources</h2>
+      {{ range . }}<div class="dg-resource"><div class="dg-resource-bar"></div><div>
+        <div class="dg-resource-name">{{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}</div>
+        {{ with .description }}<div class="dg-resource-desc">{{ . | markdownify }}</div>{{ end }}
+      </div></div>{{ end }}
+    </section>
+  {{ end }}
+  {{ with .Content }}<section class="dg-card"><div class="dg-prose">{{ . }}</div></section>{{ end }}
+</div>

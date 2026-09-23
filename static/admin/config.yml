@@ -84,3 +84,144 @@ collections:
               - { label: "To", name: "to", widget: "string" }
               - { label: "Status", name: "status", widget: "number", valueType: "int", default: 301 }
               - { label: "Force", name: "force", widget: "boolean", default: true }
+
+  - name: discipleship_guides
+    label: Discipleship Guides
+    label_singular: Discipleship Guide
+    folder: content/discipleship-guide
+    create: true
+    slug: '{{slug}}'
+    filter:
+      field: guide_format
+      value: structured
+    description: Create and edit guides. Optional sections can be left empty; list items
+      can be added, removed, and reordered.
+    fields:
+    - label: Guide format
+      name: guide_format
+      widget: hidden
+      default: structured
+    - label: Title
+      name: title
+      widget: string
+    - label: Date
+      name: date
+      widget: datetime
+      format: YYYY-MM-DDTHH:mm:ssZ
+      date_format: YYYY-MM-DD
+      time_format: HH:mm
+    - label: Speaker
+      name: speaker
+      widget: string
+      required: false
+    - label: Series
+      name: series
+      widget: string
+      required: false
+    - label: Show series in title panel
+      name: display_series
+      widget: boolean
+      default: false
+    - label: Description
+      name: description
+      widget: text
+    - label: Draft
+      name: draft
+      widget: boolean
+      default: true
+    - label: Message video URL
+      name: video_url
+      widget: string
+      required: false
+      hint: YouTube watch, share, or embed URL.
+    - label: Message Recap
+      name: message_recap
+      widget: markdown
+      required: false
+    - label: Main Idea
+      name: main_idea
+      widget: markdown
+      required: false
+    - label: Group Discussion Questions
+      name: discussion_questions
+      widget: list
+      required: false
+      collapsed: true
+      fields:
+      - label: Question
+        name: question
+        widget: markdown
+      - label: Scripture
+        name: question_scripture
+        widget: markdown
+        required: false
+    - label: Daily Devotions
+      name: daily_devotions
+      widget: list
+      required: false
+      collapsed: true
+      fields:
+      - label: Day
+        name: day
+        widget: string
+      - label: Scripture reference
+        name: scripture
+        widget: string
+        required: false
+      - label: Scripture URL
+        name: scripture_url
+        widget: string
+        required: false
+      - label: Reflection
+        name: reflection
+        widget: markdown
+        required: false
+      default:
+      - day: Monday
+      - day: Tuesday
+      - day: Wednesday
+      - day: Thursday
+      - day: Friday
+    - label: Spiritual Practice
+      name: spiritual_practice
+      widget: markdown
+      required: false
+    - label: Prayer Prompts
+      name: prayer_prompts
+      widget: list
+      required: false
+      collapsed: true
+      fields:
+      - label: Prompt
+        name: prompt
+        widget: markdown
+    - label: Next Steps
+      name: next_steps
+      widget: list
+      required: false
+      collapsed: true
+      fields:
+      - label: Step
+        name: step
+        widget: markdown
+    - label: Resources
+      name: resources
+      widget: list
+      required: false
+      collapsed: true
+      fields:
+      - label: Resource name
+        name: title
+        widget: string
+      - label: URL
+        name: url
+        widget: string
+        required: false
+      - label: Description
+        name: description
+        widget: markdown
+        required: false
+    - label: Additional content
+      name: body
+      widget: markdown
+      required: false

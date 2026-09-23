@@ -10,6 +10,10 @@
     {{ if not .Date.IsZero }}<time class="dg-hero-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ end }}
   </header>
 
-  {{ .RawContent | safeHTML }}
+  {{ if eq .Params.guide_format "structured" }}
+    {{ partial "discipleship-guide-content.html" . }}
+  {{ else }}
+    {{ .RawContent | safeHTML }}
+  {{ end }}
 </article>
 {{ end }}
