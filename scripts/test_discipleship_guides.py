@@ -58,7 +58,7 @@ class GuideTests(unittest.TestCase):
             (guides / 'cms-empty-guide.md').write_text('---\ntitle: Empty\nguide_format: structured\n---\n')
             subprocess.run(['hugo', '--buildDrafts', '--contentDir', str(temp / 'content'), '--destination', str(temp / 'public')], cwd=ROOT, check=True, capture_output=True)
             page = BeautifulSoup((temp / 'public/discipleship-guide/cms-regression-guide/index.html').read_text(), 'html.parser')
-            self.assertEqual(len(page.select('.dg-label')), 7)
+            self.assertEqual(len(page.select('.dg-label')), 9)
             self.assertEqual(page.select_one('.dg-prose strong').text, 'Editable recap')
             self.assertEqual(page.select_one('.dg-devo-tab.active').text, 'Tuesday')
             self.assertEqual(len(page.select('.dg-devo-panel.active')), 1)

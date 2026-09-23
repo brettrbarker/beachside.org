@@ -6,27 +6,27 @@
     {{ else if strings.Contains . "youtu.be/" }}
       {{ $embed = replaceRE `^.*youtu\.be/([^?&/]+).*$` `https://www.youtube-nocookie.com/embed/$1` . }}
     {{ end }}
-    <section class="dg-card dg-card--flush"><div class="dg-video"><iframe src="{{ $embed }}" title="Message video" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div></section>
+    <details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Message Video</h2></summary><div class="dg-video"><iframe src="{{ $embed }}" title="Message video" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div></details>
   {{ end }}
   {{ with .Params.message_recap }}
-    <section class="dg-card"><h2 class="dg-label">Message Recap</h2><div class="dg-prose">{{ . | markdownify }}</div></section>
+    <details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Message Recap</h2></summary><div class="dg-prose">{{ . | markdownify }}</div></details>
   {{ end }}
   {{ with .Params.main_idea }}
-    <aside class="dg-big-idea"><div class="dg-big-idea-label">Main Idea</div><blockquote>{{ . | markdownify }}</blockquote></aside>
+    <details class="dg-big-idea dg-disclosure" open><summary><h2 class="dg-label">Main Idea</h2></summary><blockquote>{{ . | markdownify }}</blockquote></details>
   {{ end }}
   {{ with .Params.discussion_questions }}
-    <section class="dg-card"><h2 class="dg-label">Group Discussion Questions</h2><ol class="dg-q-list">
+    <details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Group Discussion Questions</h2></summary><ol class="dg-q-list">
       {{ range $index, $question := . }}
         <li><div class="dg-q-num">{{ add $index 1 }}</div><div class="dg-q-body">{{ .question | markdownify }}{{ with .question_scripture }}<div class="dg-q-scripture">{{ . | markdownify }}</div>{{ end }}</div></li>
       {{ end }}
-    </ol></section>
+    </ol></details>
   {{ end }}
   {{ $devotions := slice }}
   {{ range .Params.daily_devotions }}
     {{ if or .scripture .reflection }}{{ $devotions = $devotions | append . }}{{ end }}
   {{ end }}
   {{ with $devotions }}
-    <section class="dg-card dg-card--devo"><h2 class="dg-label">Daily Devotions</h2>
+    <details class="dg-card dg-card--devo dg-disclosure"><summary><h2 class="dg-label">Daily Devotions</h2></summary>
       <div class="dg-devo-tabs" role="tablist" aria-label="Daily devotions">
         {{ range $index, $devotion := . }}<button class="dg-devo-tab{{ if eq $index 0 }} active{{ end }}" data-day="{{ $index }}">{{ .day }}</button>{{ end }}
       </div>
@@ -38,28 +38,28 @@
           </section>
         {{ end }}
       </div>
-    </section>
+    </details>
   {{ end }}
   {{ with .Params.spiritual_practice }}
-    <section class="dg-card"><h2 class="dg-label">Spiritual Practice</h2><div class="dg-practice-inner dg-prose">{{ . | markdownify }}</div></section>
+    <details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Spiritual Practice</h2></summary><div class="dg-practice-inner dg-prose">{{ . | markdownify }}</div></details>
   {{ end }}
   {{ with .Params.prayer_prompts }}
-    <section class="dg-card"><h2 class="dg-label">Prayer Prompts</h2><ul class="dg-prayer-list">
+    <details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Prayer Prompts</h2></summary><ul class="dg-prayer-list">
       {{ range . }}<li><div class="dg-prayer-dot"></div><span>{{ .prompt | markdownify }}</span></li>{{ end }}
-    </ul></section>
+    </ul></details>
   {{ end }}
   {{ with .Params.next_steps }}
-    <section class="dg-card--teal"><h2 class="dg-label">Next Steps</h2><ul class="dg-steps-list">
+    <details class="dg-card--teal dg-disclosure"><summary><h2 class="dg-label">Next Steps</h2></summary><ul class="dg-steps-list">
       {{ range . }}<li><div class="dg-step-chip">→</div><span>{{ .step | markdownify }}</span></li>{{ end }}
-    </ul></section>
+    </ul></details>
   {{ end }}
   {{ with .Params.resources }}
-    <section class="dg-card"><h2 class="dg-label">Resources</h2>
+    <details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Resources</h2></summary>
       {{ range . }}<div class="dg-resource"><div class="dg-resource-bar"></div><div>
         <div class="dg-resource-name">{{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}</div>
         {{ with .description }}<div class="dg-resource-desc">{{ . | markdownify }}</div>{{ end }}
       </div></div>{{ end }}
-    </section>
+    </details>
   {{ end }}
-  {{ with .Content }}<section class="dg-card"><div class="dg-prose">{{ . }}</div></section>{{ end }}
+  {{ with .Content }}<details class="dg-card dg-disclosure"><summary><h2 class="dg-label">Additional Content</h2></summary><div class="dg-prose">{{ . }}</div></details>{{ end }}
 </div>
