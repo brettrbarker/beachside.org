@@ -113,7 +113,7 @@ h1, h2 { font-weight: 900; letter-spacing: -0.045em; }
   background-image: var(--hero-image);
   background-position: bottom center;
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
 }
 .home-hero-overlay, .page-hero-shade, .tile-shade {
   position: absolute;
@@ -558,7 +558,7 @@ h1, h2 { font-weight: 900; letter-spacing: -0.045em; }
   .primary-nav a, .home .primary-nav a, .overlay-header .primary-nav a, .search-toggle, .home .search-toggle, .overlay-header .search-toggle { width: 100%; min-height: 51px; color: #111; font-size: 16px; justify-content: center; }
   .primary-nav .nav-featured, .home .primary-nav .nav-featured, .overlay-header .primary-nav .nav-featured { margin: 10px 0; border-color: #087bec; }
   .home-hero, .home-hero-inner { min-height: 90vh; }
-  .home-hero { background-position: -783px -360px; background-size: auto; }
+  .home-hero { background-position: bottom center; }
   .home-hero-inner { width: calc(100% - 20px); align-items: flex-start; padding-top: 108px; }
   .home-hero-copy { width: 100%; padding: 0; transform: none; }
   .home-hero h1 { max-width: 370px; margin-bottom: 20px; font-size: 30px; }
