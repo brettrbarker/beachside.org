@@ -122,6 +122,8 @@ collections:
       name: display_series
       widget: boolean
       default: false
+      required: false
+      hint: Show the series name above the guide title. Leave off to hide it in the title panel.
     - label: Description
       name: description
       widget: text
