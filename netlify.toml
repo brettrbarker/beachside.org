@@ -9,3 +9,11 @@ status = 302
 force = true
 from = "/test"
 to = "https://beachside.org"
+
+# Exact archive paths only; individual /discipleship-guide/<slug>/ pages stay intact.
+[[redirects]]
+from = "/discipleship-guide"
+to = "/discipleship-guides/"
+status = 301
+force = true
+

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting to {{ .Page.Title }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    {{/* Keep aliases on the current host when viewing a preview deployment. */}}
+    <meta http-equiv="refresh" content="0; url={{ .Page.RelPermalink }}">
+  </head>
+  <body>
+    <p>This page has moved. <a href="{{ .Page.RelPermalink }}">Continue to {{ .Page.Title }}</a>.</p>
+  </body>
+</html>
