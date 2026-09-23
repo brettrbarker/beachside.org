@@ -191,6 +191,5 @@ spiritual_practice: >-
   **Borrowing His Peace (2–3 minutes):** Picture Jesus sitting beside you—completely unhurried, unstressed, and holding the final victory. Breathe slowly and visualize your inner state matching His calm. End by repeating slowly: “In You, I have peace. You have overcome the world.”
 prayer_prompts: []
 next_steps: []
-resources:
-  - title: Test CMS Resource
+resources: []
 ---
