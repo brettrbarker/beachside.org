@@ -7,6 +7,9 @@
         <h1>{{ $home.hero.title }}</h1>
         <p>{{ $home.hero.description }}</p>
         <a class="button button-primary" href="{{ $home.hero.button.url | relURL }}">{{ $home.hero.button.label }}</a>
+        {{ with $home.hero.live }}
+          <a class="button button-primary watch-live" href="{{ .url | relURL }}" data-watch-live data-live-time-zone="{{ .time_zone }}" data-live-windows="{{ .windows | jsonify }}" hidden>{{ .label }}</a>
+        {{ end }}
         <a class="hero-secondary" href="{{ $home.hero.secondary.url | relURL }}">{{ $home.hero.secondary.label }}</a>
       </div>
     </div>

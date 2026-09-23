@@ -150,6 +150,8 @@ h1, h2 { font-weight: 900; letter-spacing: -0.045em; }
 }
 .button:hover, .button:focus-visible { transform: translateY(-2px); }
 .button-primary { background: var(--aqua); color: #fff; }
+.watch-live { margin-top: 12px; }
+.watch-live[hidden] { display: none; }
 .button-light { background: #fff; color: #111; }
 .home-hero .button { min-width: 233px; }
 .hero-secondary { display: block; width: max-content; margin: 13px 0 0 40px; color: #fff; }

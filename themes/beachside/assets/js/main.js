@@ -3,6 +3,35 @@
   const menuButton = document.querySelector('[data-menu-toggle]');
   const menu = document.querySelector('[data-menu]');
 
+  const liveButton = document.querySelector('[data-watch-live]');
+  if (liveButton) {
+    const clock = new Intl.DateTimeFormat('en-US', {
+      timeZone: liveButton.dataset.liveTimeZone,
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    });
+    const minutes = (time) => {
+      const [hour, minute] = time.split(':').map(Number);
+      return hour * 60 + minute;
+    };
+    const windows = JSON.parse(liveButton.dataset.liveWindows).map((window) => ({
+      start: minutes(window.start),
+      end: minutes(window.end),
+    }));
+    const updateLiveButton = () => {
+      const now = Object.fromEntries(clock.formatToParts(new Date()).map(({ type, value }) => [type, value]));
+      const time = Number(now.hour) * 60 + Number(now.minute);
+      liveButton.hidden = !(now.weekday === 'Sun' && windows.some(({ start, end }) => time >= start && time < end));
+    };
+    updateLiveButton();
+    // Keep open pages current and recheck immediately when a sleeping tab returns.
+    window.setInterval(updateLiveButton, 1000);
+    document.addEventListener('visibilitychange', updateLiveButton);
+    window.addEventListener('pageshow', updateLiveButton);
+  }
+
   if (menuButton && menu) {
     menuButton.addEventListener('click', () => {
       const open = menuButton.getAttribute('aria-expanded') !== 'true';

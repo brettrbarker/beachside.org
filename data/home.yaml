@@ -5,6 +5,14 @@ hero:
   button:
     label: Plan Your Visit
     url: /visit/
+  live:
+    label: Watch Live
+    url: /watch-live/
+    time_zone: America/Chicago
+    # Provisional window covering both services; the legacy schedule is not public.
+    windows:
+      - start: "08:45"
+        end: "12:00"
   secondary:
     label: Or just show up!
     url: /times-directions/

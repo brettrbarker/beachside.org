@@ -124,6 +124,18 @@ check both desktop and mobile layouts before publishing.
 
 ## Edit pages and navigation
 
+The homepage's **Watch Live** button links to `/watch-live/` and appears only
+on Sundays during the windows in `data/home.yaml` under `hero.live`. The initial
+window is **8:45 AM–noon Central**, a provisional choice covering both services;
+the legacy site's public HTML omits the scheduled button and does not expose
+its exact visibility settings. Confirm these hours with the church when migrating.
+Use quoted 24-hour `start` and `end` values; the start is inclusive and the end
+is exclusive. Add more windows to show the button separately for each service.
+`America/Chicago` handles daylight saving time independently of the visitor's
+time zone. The browser checks the schedule on load, every second, and when a
+tab resumes, so no scheduled Hugo rebuild is needed. The button stays hidden
+until JavaScript determines that a window is active.
+
 Edit an existing Markdown file under `content/` to change a normal page. Keep
 the opening and closing front matter delimiters and do not rename fields unless
 the matching template is also updated. A page with `draft: true` is available
