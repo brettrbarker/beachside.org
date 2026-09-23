@@ -136,17 +136,18 @@ collections:
       hint: YouTube watch, share, or embed URL.
     - label: Message Recap
       name: message_recap
-      widget: markdown
+      widget: collapsible-markdown
       required: false
     - label: Main Idea
       name: main_idea
-      widget: markdown
+      widget: collapsible-markdown
       required: false
     - label: Group Discussion Questions
       name: discussion_questions
       widget: list
       required: false
       collapsed: true
+      minimize_collapsed: true
       fields:
       - label: Question
         name: question
@@ -160,6 +161,7 @@ collections:
       widget: list
       required: false
       collapsed: true
+      minimize_collapsed: true
       fields:
       - label: Day
         name: day
@@ -184,13 +186,14 @@ collections:
       - day: Friday
     - label: Spiritual Practice
       name: spiritual_practice
-      widget: markdown
+      widget: collapsible-markdown
       required: false
     - label: Prayer Prompts
       name: prayer_prompts
       widget: list
       required: false
       collapsed: true
+      minimize_collapsed: true
       fields:
       - label: Prompt
         name: prompt
@@ -200,6 +203,7 @@ collections:
       widget: list
       required: false
       collapsed: true
+      minimize_collapsed: true
       fields:
       - label: Step
         name: step
@@ -209,6 +213,7 @@ collections:
       widget: list
       required: false
       collapsed: true
+      minimize_collapsed: true
       fields:
       - label: Resource name
         name: title
@@ -223,5 +228,5 @@ collections:
         required: false
     - label: Additional content
       name: body
-      widget: markdown
+      widget: collapsible-markdown
       required: false

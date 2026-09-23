@@ -255,6 +255,9 @@ structured fields as new guides. Complete the title, date, speaker, series,
 description, and optional video URL. **Show series in title panel** controls
 whether the series appears above the title.
 
+Guide sections start collapsed in the CMS. Click a section heading to expand
+it; collapsed lists hide their entries so Daily Devotions stays easy to reach.
+
 Edit Message Recap, Main Idea, Spiritual Practice, and Additional content with
 the Markdown editor. Discussion questions, daily devotions, prayer prompts,
 next steps, and resources have repeatable fields: add, remove, or reorder items
