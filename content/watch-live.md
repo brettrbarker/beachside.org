@@ -20,7 +20,7 @@ sections:
       - title: Prayer
         description: We would love to pray for you.
         image: /images/home/prayer.png
-        url: https://beachsidecc.churchcenter.com/people/forms/346978
+        url: https://beachsidecc.churchcenter.com/people/forms/346978?open-in-church-center-modal=true
         external: true
         link_label: Request Prayer
       - title: Give

@@ -54,6 +54,6 @@ sections:
     body: We are casual around here. You’ll see jeans, shorts, T-shirts, dresses, and business-casual attire. Wear something comfortable and join us.
     button:
       label: Plan Your Visit
-      url: https://beachsidecc.churchcenter.com/people/forms/520773
+      url: https://beachsidecc.churchcenter.com/people/forms/520773?open-in-church-center-modal=true
       external: true
 ---

@@ -95,7 +95,7 @@ connect:
   - title: Stay Connected
     description: Stay informed. Get updates and helpful content from Beachside Church.
     label: Subscribe
-    url: https://beachsidecc.churchcenter.com/people/forms/111935
+    url: https://beachsidecc.churchcenter.com/people/forms/111935?open-in-church-center-modal=true
     external: true
   - title: New here?
     description: Tell us you're coming and we'll save you a parking spot and meet you at the door.

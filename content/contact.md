@@ -28,12 +28,12 @@ sections:
         link_label: Start Here
       - title: Prayer
         description: Let our team know how we can pray for you.
-        url: https://beachsidecc.churchcenter.com/people/forms/346978
+        url: https://beachsidecc.churchcenter.com/people/forms/346978?open-in-church-center-modal=true
         external: true
         link_label: Share a Request
       - title: Connect
         description: Receive helpful content and learn what’s happening at Beachside.
-        url: https://beachsidecc.churchcenter.com/people/forms/198159
+        url: https://beachsidecc.churchcenter.com/people/forms/198159?open-in-church-center-modal=true
         external: true
         link_label: Connect With Us
 ---

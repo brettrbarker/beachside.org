@@ -15,6 +15,6 @@ sections:
       If you have questions, our team would love to talk with you and help you prepare.
     button:
       label: Ask About Baptism
-      url: https://beachsidecc.churchcenter.com/people/forms/198159
+      url: https://beachsidecc.churchcenter.com/people/forms/198159?open-in-church-center-modal=true
       external: true
 ---

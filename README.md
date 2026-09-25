@@ -161,9 +161,19 @@ label, destination, and weight; lower weights appear first. Use root-relative
 URLs such as `/visit/` for pages in this site and complete `https://` URLs for
 external destinations.
 
-Links to registration, giving, groups, and other actions hosted by Church
-Center must remain external Church Center URLs. Do not replace them with local
-paths or attempt to recreate those account-based workflows in Hugo.
+Church Center giving and People form links open in an embedded popup using
+Planning Center's script, loaded in the shared head partial. Keep the original
+Church Center URL and append `?open-in-church-center-modal=true` (or
+`&open-in-church-center-modal=true` if the URL already has a query string).
+Use this for `/giving`, fund-specific `/giving/to/...`, and `/people/forms/...`
+links, including links entered through the CMS. Existing external-link settings
+provide a normal link fallback if the script cannot load.
+
+The popup requires HTTPS on desktop. Planning Center opens a separate browser
+window on mobile devices and non-HTTPS local previews. Registration and group
+pages do not support embedding and should keep their normal external URLs.
+See Planning Center's [form integration instructions](https://help.planningcenter.com/en/139195-integrate-a-form-onto-your-website.html)
+and [supported embeds](https://help.planningcenter.com/en/144373-embed-or-link-your-church-center-pages.html).
 
 The optional announcement banner is controlled by the announcement values in
 `hugo.toml` under `[params.announcement]`. Set `enabled` to `true` or `false`,

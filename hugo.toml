@@ -50,7 +50,7 @@ disableKinds = ['taxonomy', 'term']
   weight = 40
 [[menus.main]]
   name = 'Connect'
-  url = 'https://beachsidecc.churchcenter.com/people/forms/198159'
+  url = 'https://beachsidecc.churchcenter.com/people/forms/198159?open-in-church-center-modal=true'
   weight = 50
   [menus.main.params]
     external = true
