@@ -12,7 +12,7 @@
       <div class="page-hero-shade"></div>
       <div class="page-hero-copy{{ if .center }} center{{ end }}">
         {{ with .eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
-        {{ with .title }}<h2>{{ . }}</h2>{{ end }}
+        {{ with .title }}{{ if $.Params.hide_page_header }}<h1>{{ . }}</h1>{{ else }}<h2>{{ . }}</h2>{{ end }}{{ end }}
         {{ with .description }}<p>{{ . }}</p>{{ end }}
         {{ with .button }}<a class="button button-primary" href="{{ if hasPrefix .url "http" }}{{ .url }}{{ else }}{{ .url | relURL }}{{ end }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>{{ end }}
       </div>

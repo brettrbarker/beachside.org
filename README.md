@@ -124,7 +124,21 @@ check both desktop and mobile layouts before publishing.
 
 ## Edit pages and navigation
 
-The homepage's **Watch Live** button links to `/watch-live/` and appears only
+The homepage follows the design in `new-theme/homepage.html`. Edit its copy,
+navigation links, ministry cards, and connection links in `data/home.yaml`.
+Its layout is in `themes/beachside/layouts/home.html` and its responsive styles
+are in `themes/beachside/assets/css/home.css`. The homepage uses locally hosted
+Figtree, Big Shoulders Display, and Bitter fonts extracted from the design,
+along with its hero and location photos. Interior pages retain their existing
+layouts and styles for the next stage of the redesign.
+
+The message feature automatically selects the newest published message with a
+video, including series landing pages and individual parts. Its watch button
+opens that message. The design's unfinished testimonial placeholders are
+replaced with editable Groups and Starting Point cards. The announcement
+appears after the homepage footer and can still be dismissed.
+
+The homepage's **Watch live now!** badge links to `/watch-live/` and appears only
 on Sundays during the windows in `data/home.yaml` under `hero.live`. The initial
 window is **8:45 AM–noon Central**, a provisional choice covering both services;
 the legacy site's public HTML omits the scheduled button and does not expose
@@ -142,7 +156,7 @@ the matching template is also updated. A page with `draft: true` is available
 only when Hugo is run with `--buildDrafts`; change it to `false` when the page
 is ready to publish.
 
-The primary navigation is configured in `hugo.toml`. Each menu item has a
+The interior pages' primary navigation is configured in `hugo.toml`. Each menu item has a
 label, destination, and weight; lower weights appear first. Use root-relative
 URLs such as `/visit/` for pages in this site and complete `https://` URLs for
 external destinations.

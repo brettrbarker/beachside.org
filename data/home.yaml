@@ -1,12 +1,13 @@
+# Homepage content for the redesign. Images and links can be replaced here.
 hero:
-  title: WE ARE FOR THE EMERALD COAST.
-  description: For far too long, the church has been known for what it’s against. We want to be known for what we are for.
-  image: /images/home/hero.jpg
+  title: We help make faith practical.
+  description: A church for families who want a great place for their kids, real friends, and a faith that makes sense for everyday life.
+  image: /images/home/redesign-hero.jpg
   button:
     label: Plan Your Visit
     url: /visit/
   live:
-    label: Watch Live
+    label: Watch live now!
     url: /watch-live/
     time_zone: America/Chicago
     # Provisional window covering both services; the legacy schedule is not public.
@@ -14,94 +15,89 @@ hero:
       - start: "08:45"
         end: "12:00"
   secondary:
-    label: Or just show up!
+    label: Get Directions
     url: /times-directions/
+  schedule: Sundays at 9:00am and 10:45am
+  address: 200 Racetrack Road NW, Fort Walton Beach
 
-schedule: In-person or online Sundays at 9:00 & 10:45 AM
+navigation:
+  - label: Events
+    url: /events/
+  - label: FOR
+    url: /for/
+  - label: Watch
+    url: /messages/
+  - label: Give
+    url: /engage/give/
 
-journey:
-  heading: Here's how to start your journey.
+sunday:
+  heading: Join us Sunday
+  times: ["9:00", "10:45"]
+  address: 200 Racetrack Rd NW, FWB, FL 32547
+  landmark: Next to Choctaw High School
+  image: /images/home/redesign-location.jpg
+  image_alt: Beachside Church in Fort Walton Beach
+
+welcome:
+  heading: Your first Sunday, minus the guesswork.
   cards:
-    - title: 1. Join us on a Sunday
-      description: We have something for everyone in your family.
+    - title: Come as you are
+      description: No matter where you are, you can belong here before you believe.
       image: /images/home/join-sunday.jpg
-      url: /visit/
-    - title: 2. Connect with us
-      description: Learn about events and receive helpful content.
-      image: /images/home/connect.png
-      url: https://beachsidecc.churchcenter.com/people/forms/111935
-      external: true
-    - title: 3. Connect with others
-      description: Experience why life is better connected.
-      image: /images/home/connect-others.jpg
+    - title: Kids are covered
+      description: Safe, secure check-in and a morning your kids will ask to come back to.
+      image: /images/pages/waumba-hero.jpeg
+    - title: About an hour
+      description: Music, a message you can actually use this week, and you're out.
+      image: /images/home/adult-sunday.jpg
+
+community:
+  heading: Life is complicated. You want to get it right. We want to help.
+  description: Beachside is full of locals, military families, and people who are new to the Emerald Coast. We're here to help you discover a practical faith that leads to greater meaning and direction in life. We've built every Sunday with guests in mind, so you'll know where to go, what to expect, and who to ask.
+  # Replace these welcome cards with approved testimonials when available.
+  cards:
+    - title: A place to belong.
+      description: Real friends make a difference. Find a group and experience why life is better connected.
+      label: Find your people
       url: /adults/groups/
-    - title: Ready to start?
-      description: Plan your visit or join us Sunday!
-      image: /images/home/ready.png
-      url: /times-directions/
+    - title: Room for your questions.
+      description: Exploring faith? Starting Point is a conversation about faith where your questions are welcome.
+      label: Explore Starting Point
+      url: /adults/starting-point/
 
 families:
-  heading: For Families
+  eyebrow: Family ministry
+  heading: Something great for every age.
   cards:
-    - title: Birth through Preschool
-      description: Building a foundation that lasts
-      image: /images/home/waumba.jpg
+    - title: Waumba Land
+      age: Birth–Preschool
+      image: /images/pages/waumba-hero.jpeg
       url: /children/waumba-land/
-    - title: Elementary School
-      description: Preparing kids to take the high road
-      image: /images/home/upstreet.jpg
+    - title: UpStreet
+      age: Elementary school
+      image: /images/pages/upstreet-hero.jpg
       url: /children/upstreet/
-    - title: Middle School
-      description: Students who have a faith of their own
-      image: /images/home/transit.png
+    - title: Transit
+      age: Middle school
+      image: /images/pages/transit-hero.jpg
       url: /students/transit/
-    - title: High School
-      description: A place where students belong
-      image: /images/home/insideout.png
+    - title: InsideOut
+      age: High school
+      image: /images/pages/insideout-hero.jpeg
       url: /students/insideout/
 
-adults:
-  heading: For Adults
-  cards:
-    - title: Adult Sunday Experience
-      description: A helpful message and inspiring music
-      image: /images/home/adult-sunday.jpg
-      url: /messages/
-      featured: true
-    - title: Watch Online
-      description: New content Sundays at 9am
-      image: /images/home/watch-online.jpg
-      url: /watch-live/
-    - title: Prayer
-      description: How can we pray for you?
-      image: /images/home/prayer.png
-      url: https://beachsidecc.churchcenter.com/people/forms/346978
-      external: true
-    - title: Groups
-      description: Life is better connected
-      image: /images/home/adults.png
-      url: /adults/
-    - title: Join a Team
-      description: Make Beachside feel like your church
-      image: /images/home/serve.jpg
-      url: /engage/serve/
+messages:
+  description: Missed Sunday, or want to catch up before you visit? Every message is online, free, no signup.
 
-social:
-  heading: Connect with us on social media.
-  networks:
-    - name: Facebook
-      class: facebook
-      symbol: f
-      url: https://www.facebook.com/BeachsideFWB
-    - name: TikTok
-      class: tiktok
-      symbol: ♪
-      url: https://www.tiktok.com/@beachside.church
-    - name: Instagram
-      class: instagram
-      symbol: ◎
-      url: https://www.instagram.com/BeachsideFWB/
-    - name: YouTube
-      class: youtube
-      symbol: ▶
-      url: https://www.youtube.com/channel/UC14QcoW0fLDIbGpUiGWysNg
+mission: Our mission is to inspire people to follow Jesus with all of their heart. Because what we've found is that following Jesus makes life better and makes us better at life.
+
+connect:
+  - title: Stay Connected
+    description: Stay informed. Get updates and helpful content from Beachside Church.
+    label: Subscribe
+    url: https://beachsidecc.churchcenter.com/people/forms/111935
+    external: true
+  - title: New here?
+    description: Tell us you're coming and we'll save you a parking spot and meet you at the door.
+    label: Plan a visit
+    url: /visit/

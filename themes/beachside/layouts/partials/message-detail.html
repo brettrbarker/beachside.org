@@ -1,54 +1,44 @@
 {{ $page := .page }}
 {{ $seriesPage := .seriesPage }}
-{{ $seriesTitle := $seriesPage.Title }}
-{{ if eq $seriesPage.Kind "section" }}
-  {{ $seriesTitle = $seriesPage.Params.series | default $seriesPage.Title }}
-{{ end }}
+{{ $seriesTitle := $seriesPage.Params.series | default $seriesPage.Title }}
 {{ $parts := $seriesPage.RegularPages }}
-{{ $messageCount := add 1 (len $parts) }}
-
-<article class="message-single wrap">
-  <header class="message-header">
-    <h1>{{ $seriesTitle }}</h1>
-    {{ if eq $seriesPage.Kind "section" }}
-      <h2>{{ $page.Title }}</h2>
-    {{ end }}
-  </header>
-
-  {{ partial "message-video.html" $page }}
-
-  <div class="message-detail-grid">
-    <div class="message-body">
-      <h2>{{ $page.Title }}</h2>
-      <div class="message-meta">
-        {{ with $page.Params.speaker }}<span>{{ . }}</span>{{ end }}
-        {{ if not $page.Date.IsZero }}<time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "January 2, 2006" }}</time>{{ end }}
-      </div>
-      {{ if $page.Content }}
-        <div class="prose">{{ $page.Content }}</div>
-      {{ else }}
-        {{ with $page.Description }}<p class="message-description">{{ . }}</p>{{ end }}
-      {{ end }}
-      <div class="message-actions">
-        {{ with $page.Params.audio_url }}<a class="button button-dark" href="{{ . }}">Audio</a>{{ end }}
-        {{ with $page.Params.guide_url }}<a class="button button-dark" href="{{ . }}">Discipleship Guide</a>{{ end }}
-      </div>
-    </div>
-
-    {{ if gt $messageCount 1 }}
-      <aside class="series-messages" aria-labelledby="series-messages-title">
-        <h2 id="series-messages-title">Messages in This Series</h2>
-        <div class="series-message-list">
-          {{ range $parts.ByDate.Reverse }}
-            {{ if ne .RelPermalink $page.RelPermalink }}
-              {{ partial "message-series-card.html" (dict "message" .) }}
+<article class="message-detail">
+  <div class="message-stage">
+    <div class="home-container">
+      <nav class="message-breadcrumb" aria-label="Breadcrumb"><a href="{{ "/messages/" | relURL }}">Messages</a><span aria-hidden="true">/</span><span>{{ $seriesTitle }}</span></nav>
+      <div class="message-player-layout{{ if not $parts }} message-player-solo{{ end }}">
+        {{ partial "message-video.html" $page }}
+        {{ if $parts }}
+          <aside class="message-playlist" aria-labelledby="series-messages-title">
+            <h2 id="series-messages-title">Messages in this series</h2>
+            <div class="message-now-playing" aria-current="true"><span>Now playing</span><h3>{{ $page.Title }}</h3><time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "January 2, 2006" }}</time></div>
+            {{ range $parts.ByDate.Reverse }}
+              {{ if ne .RelPermalink $page.RelPermalink }}{{ partial "message-series-card.html" (dict "message" .) }}{{ end }}
             {{ end }}
-          {{ end }}
-          {{ if ne $seriesPage.RelPermalink $page.RelPermalink }}
-            {{ partial "message-series-card.html" (dict "message" $seriesPage) }}
-          {{ end }}
+            {{ if ne $seriesPage.RelPermalink $page.RelPermalink }}{{ partial "message-series-card.html" (dict "message" $seriesPage) }}{{ end }}
+          </aside>
+        {{ end }}
+      </div>
+      <header class="message-title-row">
+        <div>
+          {{ with $page.Params.series }}<p class="home-eyebrow">{{ . }}</p>{{ end }}
+          <h1>{{ $page.Title }}</h1>
+          <div class="message-meta">{{ with $page.Params.speaker }}<span>{{ . }}</span>{{ end }}{{ if not $page.Date.IsZero }}<time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "January 2, 2006" }}</time>{{ end }}</div>
         </div>
-      </aside>
-    {{ end }}
+        <div class="message-resource-actions">
+          {{ with $page.Params.audio_url }}<a class="home-button home-button-outline" href="{{ . }}">Audio</a>{{ end }}
+          {{ with $page.Params.guide_url }}<a class="home-button" href="{{ . | relURL }}">Discipleship Guide</a>{{ end }}
+        </div>
+      </header>
+    </div>
+  </div>
+  <div class="home-container message-reading home-section-space">
+    <div class="message-reading-copy">{{ if $page.Content }}{{ $page.Content }}{{ else }}{{ with $page.Description }}<p>{{ . }}</p>{{ end }}{{ end }}</div>
+    <aside class="ministry-schedule">
+      <h2 class="home-kicker">Watch in person</h2>
+      <p class="message-visit-times">{{ hugo.Data.home.hero.schedule }}</p>
+      <p>{{ site.Params.address }}</p>
+      <a class="home-button home-button-dark" href="{{ "/times-directions/" | relURL }}">Get directions</a>
+    </aside>
   </div>
 </article>

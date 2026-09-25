@@ -77,6 +77,8 @@
         } catch (_) {
           searchIndex = [];
         }
+        // A visitor may type before the index finishes loading.
+        searchInput.dispatchEvent(new Event('input'));
       }
     });
   });

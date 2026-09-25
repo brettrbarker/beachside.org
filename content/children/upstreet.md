@@ -1,46 +1,39 @@
 ---
 title: UpStreet
 description: An engaging Sunday environment helping elementary-age kids grow in faith and friendship.
-layout: landing
+layout: ministry
 hero:
   image: /images/pages/upstreet-hero.jpg
   position: center
-  height: 70vh
-  title: LET'S GET THE PARTY STARTED!
-sections:
-  - kind: split
-    title: We’re helping kids grow in faith and build great friendships.
+  title: Let’s get the party started!
+sections: []
+ministry:
+  age: Kids · Elementary school
+  intro: We’re helping kids grow in faith and build great friendships.
+  beliefs:
+  - God loves me.
+  - I can trust God no matter what.
+  - I should love others the way Jesus loves me.
+  body: 'They’ll have so much fun learning:'
+  schedule:
+    label: Sunday morning
+    times: 9:00 & 10:45
+    period: am
+    body: 'Drop-off begins 15 minutes before each service. All UpStreet volunteers are carefully
+      trained and background checked. Our secure check-in process helps keep every child safe.
+
+
+      Tell us about allergies, medical needs, or behavioral needs so we can best support your family.
+      No outside food or drink is permitted.
+
+      '
+    contact: mailto:upstreet@beachside.org
+  feature:
+    title: Growing in faith, one Sunday at a time.
     image: /images/pages/upstreet-current.jpg
-    image_side: right
-    body: |
-      They’ll have so much fun learning:
-
-      - God loves me.
-      - I can trust God no matter what.
-      - I should love others the way Jesus loves me.
-
-      Have questions? Email [upstreet@beachside.org](mailto:upstreet@beachside.org).
-  - kind: text
-    theme: light
-    title: Sunday Morning in UpStreet
-    body: |
-      Drop-off begins 15 minutes before each service. All UpStreet volunteers are carefully trained and background checked. Our secure check-in process helps keep every child safe.
-
-      Tell us about allergies, medical needs, or behavioral needs so we can best support your family. No outside food or drink is permitted.
-  - kind: cards
-    title: Other Environments for Kids and Students
-    columns: 4
-    cards:
-      - title: Birth through Preschool
-        image: /images/home/waumba.jpg
-        url: /children/waumba-land/
-      - title: Elementary School
-        image: /images/home/upstreet.jpg
-        url: /children/upstreet/
-      - title: Middle School
-        image: /images/home/transit.png
-        url: /students/transit/
-      - title: High School
-        image: /images/home/insideout.png
-        url: /students/insideout/
+    idea: Trust
+    idea_description: Knowing we can count on God, no matter what.
+    resource_title: Partnering with parents
+    resource_description: Keep the conversation going at home.
+    resource_url: /children/partnering-with-parents/
 ---
