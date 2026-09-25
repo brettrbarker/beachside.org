@@ -12,7 +12,7 @@ sections:
       Your generosity helps create environments where people can take steps toward following Jesus with all of their heart.
     button:
       label: Give Online
-      url: https://beachsidecc.churchcenter.com/giving
+      url: https://beachsidecc.churchcenter.com/giving?open-in-church-center-modal=true
       external: true
   - kind: split
     theme: light
@@ -25,7 +25,7 @@ sections:
       In addition to making our church’s budget more stable and predictable, we hope automated giving makes your participation in Beachside’s mission as easy as possible.
     button:
       label: Set Up Giving
-      url: https://beachsidecc.churchcenter.com/giving
+      url: https://beachsidecc.churchcenter.com/giving?open-in-church-center-modal=true
       external: true
   - kind: columns
     title: Other Ways to Give

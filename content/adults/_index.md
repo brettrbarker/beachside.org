@@ -41,7 +41,7 @@ sections:
       - title: Short-term Groups
         description: Topic-based environments designed to help you take a practical next step.
         image: /images/home/connect-others.jpg
-        url: https://beachsidecc.churchcenter.com/people/forms/122454
+        url: https://beachsidecc.churchcenter.com/people/forms/122454?open-in-church-center-modal=true
         external: true
         link_label: Ask About Groups
 ---

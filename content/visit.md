@@ -12,7 +12,7 @@ hero:
   title: TRYING A NEW CHURCH DOESN'T HAVE TO BE HARD.
   button:
     label: Plan Your Visit
-    url: https://beachsidecc.churchcenter.com/people/forms/520773
+    url: https://beachsidecc.churchcenter.com/people/forms/520773?open-in-church-center-modal=true
     external: true
 sections:
   - kind: split
@@ -52,6 +52,6 @@ sections:
       Friendly people, casual clothes, engaging music, and a practical message. If you bring kids, arrive about 15 minutes early so our team can help with secure check-in.
     button:
       label: Plan Your Visit
-      url: https://beachsidecc.churchcenter.com/people/forms/520773
+      url: https://beachsidecc.churchcenter.com/people/forms/520773?open-in-church-center-modal=true
       external: true
 ---

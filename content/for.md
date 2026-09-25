@@ -21,7 +21,7 @@ sections:
     cards:
       - title: Give to Fresh Start
         description: Help fund a scholarship for a family moving toward long-term self-sufficiency.
-        url: https://beachsidecc.churchcenter.com/giving/to/for
+        url: https://beachsidecc.churchcenter.com/giving/to/for?open-in-church-center-modal=true
         external: true
         link_label: Give to FOR
       - title: Serve at Fresh Start
