@@ -1,29 +1,31 @@
 {{ define "main" }}
 {{ $ministry := .Params.ministry }}
 <article class="ministry-page">
-  <header class="ministry-hero" style="--ministry-image: url('{{ .Params.hero.image | relURL }}'); --ministry-position: {{ .Params.hero.position | default "center" }}">
-    <div class="home-container">
+  <nav class="breadcrumb home-container" aria-label="Breadcrumb"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a><span aria-hidden="true">/</span><span>{{ .Title }}</span></nav>
+  <header class="ministry-hero" style="--ministry-position: {{ .Params.hero.position | default "center" }}">
+    <div class="ministry-hero-copy">
       <p class="home-eyebrow">{{ $ministry.age }}</p>
       <h1>{{ .Title }}</h1>
       <p class="ministry-tagline">{{ .Params.hero.title }}</p>
     </div>
+    <img src="{{ .Params.hero.image | relURL }}" alt="" fetchpriority="high">
   </header>
   <section class="home-container ministry-intro home-section-space" aria-label="About {{ .Title }}">
     <div class="ministry-intro-copy">
       <h2>{{ $ministry.intro }}</h2>
       {{ with $ministry.body }}<div class="ministry-body">{{ . | markdownify }}</div>{{ end }}
-      <ul class="ministry-beliefs">
+      <ol class="ministry-beliefs">
         {{ range $ministry.beliefs }}<li>{{ . }}</li>{{ end }}
-      </ul>
+      </ol>
     </div>
     {{ with $ministry.schedule }}
       <aside class="ministry-schedule" aria-label="{{ $.Title }} meeting details">
         <h2 class="home-kicker">{{ .label }} in {{ $.Title }}</h2>
-        <p class="ministry-times">{{ .times }} <span>{{ .period }}</span></p>
+        <p class="ministry-times">{{ range split .times "&" }}<span>{{ trim . " " }}{{ $ministry.schedule.period }}</span>{{ end }}</p>
         <div>{{ .body | markdownify }}</div>
         <div class="ministry-contact">
           <h3>Have questions about {{ $.Title }}?</h3>
-          <a class="home-button home-button-dark" href="{{ .contact | relURL }}">Contact Us</a>
+          <a class="home-button" href="{{ .contact | relURL }}">Contact Us</a>
         </div>
       </aside>
     {{ end }}
@@ -52,16 +54,7 @@
   {{ range .Params.sections }}{{ partial "content-section.html" (dict "section" . "page" $) }}{{ end }}
   <section class="home-container home-section-space ministry-environments" aria-labelledby="environments-title">
     <h2 class="home-section-title" id="environments-title">Environments for every age.</h2>
-    <div class="home-family-grid">
-      {{ range hugo.Data.home.families.cards }}
-        {{ $current := eq .url $.RelPermalink }}
-        <a class="home-family-card{{ if $current }} is-current{{ end }}" href="{{ .url | relURL }}"{{ if $current }} aria-current="page"{{ end }}>
-          <div class="ministry-environment-image"><img src="{{ .image | relURL }}" alt="" loading="lazy" width="540" height="480">{{ if $current }}<span>You’re here</span>{{ end }}</div>
-          <p class="home-family-age">{{ .age }}</p>
-          <h3>{{ .title }} <span aria-hidden="true">↗</span></h3>
-        </a>
-      {{ end }}
-    </div>
+    {{ partial "environments.html" . }}
   </section>
 </article>
 {{ end }}

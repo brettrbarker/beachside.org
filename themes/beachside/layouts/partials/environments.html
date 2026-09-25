@@ -1,0 +1,8 @@
+<div class="environment-grid">
+  {{ range hugo.Data.home.families.cards }}
+    {{ $current := eq .url $.RelPermalink }}
+    <a class="environment-card{{ if $current }} is-current{{ end }}" href="{{ .url | relURL }}"{{ if $current }} aria-current="page"{{ end }}>
+      <h3>{{ .age }}</h3><p>{{ .title }}</p><span>{{ if $current }}You’re here{{ else }}Explore <span aria-hidden="true">→</span>{{ end }}</span>
+    </a>
+  {{ end }}
+</div>

@@ -1,6 +1,7 @@
 # Homepage content for the redesign. Images and links can be replaced here.
 hero:
-  title: We help make faith practical.
+  title: For the Emerald
+  accent: Coast
   description: A church for families who want a great place for their kids, real friends, and a faith that makes sense for everyday life.
   image: /images/home/redesign-hero.jpg
   button:
@@ -21,17 +22,17 @@ hero:
   address: 200 Racetrack Road NW, Fort Walton Beach
 
 navigation:
-  - label: Events
-    url: /events/
-  - label: FOR
-    url: /for/
+  - label: I'm New
+    url: /visit/
   - label: Watch
     url: /messages/
+  - label: Location
+    url: /times-directions/
   - label: Give
     url: /engage/give/
 
 sunday:
-  heading: Join us Sunday
+  heading: This Sunday
   times: ["9:00", "10:45"]
   address: 200 Racetrack Rd NW, FWB, FL 32547
   landmark: Next to Choctaw High School
@@ -39,7 +40,9 @@ sunday:
   image_alt: Beachside Church in Fort Walton Beach
 
 welcome:
-  heading: Your first Sunday, minus the guesswork.
+  heading: A church unchurched people love to attend.
+  description: If church has felt like a room you didn't belong in, start with us. We're here to help you find real friends and a faith that makes sense for everyday life.
+  prompt: Everything you need to know before you walk in.
   cards:
     - title: Come as you are
       description: No matter where you are, you can belong here before you believe.
@@ -50,6 +53,8 @@ welcome:
     - title: About an hour
       description: Music, a message you can actually use this week, and you're out.
       image: /images/home/adult-sunday.jpg
+    - title: Just visiting?
+      description: Stationed here, passing through, or brand new to the coast — you're in the right place.
 
 community:
   heading: Life is complicated. You want to get it right. We want to help.
@@ -91,13 +96,18 @@ messages:
 
 mission: Our mission is to inspire people to follow Jesus with all of their heart. Because what we've found is that following Jesus makes life better and makes us better at life.
 
+scripture:
+  text: “If the Spirit of him who raised Jesus from the dead dwells in you, he who raised Christ Jesus from the dead will also give life to your mortal bodies through his Spirit who dwells in you.”
+  reference: Romans 8:11
+  image: /images/home/adult-sunday.jpg
+
 connect:
+  - title: Give
+    description: Generosity is how we make a difference together. Help us stay for the Emerald Coast.
+    label: Give now
+    url: /engage/give/
   - title: Stay Connected
     description: Stay informed. Get updates and helpful content from Beachside Church.
     label: Subscribe
     url: https://beachsidecc.churchcenter.com/people/forms/111935
     external: true
-  - title: New here?
-    description: Tell us you're coming and we'll save you a parking spot and meet you at the door.
-    label: Plan a visit
-    url: /visit/

@@ -1,0 +1,18 @@
+<article class="page page-{{ with .File }}{{ .ContentBaseName | urlize }}{{ else }}section{{ end }}">
+  {{ if not .Params.hide_page_header }}
+    <header class="page-header wrap"><h1>{{ .Title }}</h1>{{ with .Params.subtitle | default .Description }}<p>{{ . }}</p>{{ end }}</header>
+  {{ end }}
+  {{ with .Params.hero }}
+    <section class="page-hero{{ if .compact }} page-hero-compact{{ end }}" style="--hero-position: {{ .position | default "center" }}">
+      <div class="page-hero-copy">
+        {{ with .eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
+        {{ if $.Params.hide_page_header }}<h1>{{ .title | default $.Title }}</h1>{{ else }}{{ with .title }}<h2>{{ . }}</h2>{{ end }}{{ end }}
+        {{ with .description }}<p>{{ . }}</p>{{ end }}
+        {{ with .button }}<a class="button button-dark" href="{{ .url | relURL }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>{{ end }}
+      </div>
+      {{ with .image }}<img src="{{ . | relURL }}" alt="{{ $.Params.hero.image_alt | default "" }}" fetchpriority="high">{{ end }}
+    </section>
+  {{ end }}
+  {{ with .Content }}<div class="prose wrap">{{ . }}</div>{{ end }}
+  {{ range .Params.sections }}{{ partial "content-section.html" (dict "section" . "page" $) }}{{ end }}
+</article>

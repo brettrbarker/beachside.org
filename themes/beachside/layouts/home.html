@@ -1,118 +1,69 @@
 {{ define "main" }}
-  {{ $home := hugo.Data.home }}
-  <section class="home-intro" aria-labelledby="home-title">
-    <img class="home-intro-image" src="{{ $home.hero.image | relURL }}" alt="" fetchpriority="high">
-    <div class="home-container home-intro-content">
-      {{ with $home.hero.live }}
-        <a class="home-live" href="{{ .url | relURL }}" data-watch-live data-live-time-zone="{{ .time_zone }}" data-live-windows="{{ .windows | jsonify }}" hidden>{{ .label }}</a>
-      {{ end }}
-      <h1 id="home-title">{{ $home.hero.title }}</h1>
-      <p class="home-intro-description">{{ $home.hero.description }}</p>
-      <div class="home-actions">
-        <a class="home-button" href="{{ $home.hero.button.url | relURL }}">{{ $home.hero.button.label }}</a>
-        <a class="home-button home-button-outline" href="{{ $home.hero.secondary.url | relURL }}">{{ $home.hero.secondary.label }}</a>
-      </div>
-      <p class="home-intro-details">{{ $home.hero.schedule }} <span aria-hidden="true">·</span> {{ $home.hero.address }}</p>
+{{ $home := hugo.Data.home }}
+<section class="home-intro" aria-labelledby="home-title">
+  <div class="home-intro-photo">
+    <img src="{{ $home.hero.image | relURL }}" alt="" fetchpriority="high">
+    <div class="home-intro-content">
+      {{ with $home.hero.live }}<a class="home-live" href="{{ .url | relURL }}" data-watch-live data-live-time-zone="{{ .time_zone }}" data-live-windows="{{ .windows | jsonify }}" hidden>{{ .label }}</a>{{ end }}
+      <h1 id="home-title">{{ $home.hero.title }} <span>{{ $home.hero.accent }}</span></h1>
     </div>
-  </section>
-
-  <section class="home-sunday" aria-labelledby="sunday-title">
-    <div class="home-sunday-copy">
-      <h2 class="home-kicker" id="sunday-title">{{ $home.sunday.heading }}</h2>
-      <p class="home-service-times">{{ range $i, $time := $home.sunday.times }}{{ if $i }}<span class="home-time-divider">&amp;</span>{{ end }}<span>{{ $time }}</span>{{ end }}<span class="home-time-period">am</span></p>
-      <p class="home-address">{{ $home.sunday.address }}<br>{{ $home.sunday.landmark }}</p>
-      <div class="home-actions">
-        <a class="home-button home-button-dark" href="{{ "/times-directions/" | relURL }}">Get directions</a>
-        <a class="home-button home-button-outline" href="{{ "/visit/" | relURL }}">What to expect</a>
-      </div>
+  </div>
+  <div class="home-sunday">
+    <h2 class="home-kicker">{{ $home.sunday.heading }}</h2>
+    <p class="home-service-times">{{ range $home.sunday.times }}<span>{{ . }}am</span>{{ end }}</p>
+    <p class="home-address">{{ $home.sunday.address }}<br>{{ $home.sunday.landmark }}</p>
+    <div class="home-actions">
+      <a class="home-button home-button-dark" href="{{ $home.hero.secondary.url | relURL }}">{{ $home.hero.secondary.label }}</a>
+      <a class="home-button home-button-outline" href="{{ $home.hero.button.url | relURL }}">{{ $home.hero.button.label }}</a>
     </div>
-    <img src="{{ $home.sunday.image | relURL }}" alt="{{ $home.sunday.image_alt }}" loading="lazy" width="960" height="640">
-  </section>
-
-  <section class="home-container home-section-space" aria-labelledby="welcome-title">
-    <h2 class="home-section-title home-welcome-title" id="welcome-title">{{ $home.welcome.heading }}</h2>
-    <div class="home-welcome-grid">
-      {{ range $home.welcome.cards }}
-        <article class="home-welcome-card">
-          <img src="{{ .image | relURL }}" alt="" loading="lazy" width="720" height="440">
-          <h3>{{ .title }}</h3>
-          <p>{{ .description }}</p>
-        </article>
-      {{ end }}
-    </div>
-  </section>
-
-  <section class="home-community" aria-labelledby="community-title">
-    <div class="home-container home-section-space home-split">
-      <div>
-        <h2 class="home-section-title" id="community-title">{{ $home.community.heading }}</h2>
-        <p class="home-body-copy">{{ $home.community.description }}</p>
-      </div>
-      <div class="home-community-cards">
-        {{ range $home.community.cards }}
-          <article class="home-community-card">
-            <h3>{{ .title }}</h3>
-            <p>{{ .description }}</p>
-            <a href="{{ .url | relURL }}">{{ .label }} <span aria-hidden="true">→</span></a>
-          </article>
-        {{ end }}
-      </div>
-    </div>
-  </section>
-
-  <section class="home-container home-section-space" aria-labelledby="families-title">
-    <div class="home-family-heading">
-      <div>
-        <p class="home-eyebrow">{{ $home.families.eyebrow }}</p>
-        <h2 class="home-section-title" id="families-title">{{ $home.families.heading }}</h2>
-      </div>
-      <div class="home-family-links"><a href="{{ "/children/" | relURL }}">Kids <span aria-hidden="true">↗</span></a><a href="{{ "/students/" | relURL }}">Students <span aria-hidden="true">↗</span></a></div>
-    </div>
-    <div class="home-family-grid">
-      {{ range $home.families.cards }}
-        <a class="home-family-card" href="{{ .url | relURL }}">
-          <img src="{{ .image | relURL }}" alt="" loading="lazy" width="540" height="480">
-          <p class="home-family-age">{{ .age }}</p>
-          <h3>{{ .title }} <span aria-hidden="true">↗</span></h3>
-        </a>
-      {{ end }}
-    </div>
-  </section>
-
-  {{/* Include series landing pages (Part 1) as well as individual messages. */}}
-  {{ $messages := where (where site.Pages "Section" "messages") "Params.video_url" "ne" nil }}
-  {{ $messages = where $messages "Params.video_url" "ne" "" }}
-  {{ range first 1 $messages.ByDate.Reverse }}
-    <section class="home-message" aria-labelledby="message-title">
-      <div class="home-container home-section-space home-split">
+  </div>
+</section>
+<div class="home-new-here">
+  <div class="home-container"><strong>New here?</strong><p>{{ $home.welcome.prompt }}</p><a href="{{ "/visit/" | relURL }}">Start here <span aria-hidden="true">→</span></a></div>
+</div>
+<section class="home-container home-section-space home-welcome" aria-labelledby="welcome-title">
+  <div class="home-welcome-intro">
+    <h2 id="welcome-title">{{ $home.welcome.heading }}</h2>
+    <p>{{ $home.welcome.description }}</p>
+    <a class="text-link" href="{{ "/about/" | relURL }}">What we believe <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="home-welcome-grid">
+    {{ range $i, $card := $home.welcome.cards }}
+    <article class="home-welcome-card"><span class="card-number" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span><h3>{{ .title }}</h3><p>{{ .description }}</p></article>
+    {{ end }}
+  </div>
+</section>
+{{ $messages := where (where site.Pages "Section" "messages") "Params.video_url" "ne" nil }}
+{{ $messages = where $messages "Params.video_url" "ne" "" }}
+{{ with first 3 $messages.ByDate.Reverse }}
+<section class="home-messages" aria-labelledby="messages-title">
+  <div class="home-container home-section-space">
+    <div class="section-heading"><h2 class="home-section-title" id="messages-title">Watch a message</h2><a class="text-link" href="{{ "/messages/" | relURL }}">All messages <span aria-hidden="true">→</span></a></div>
+    <div class="home-message-grid">
+      {{ range $i, $message := . }}
+      <article class="home-message-card">
         <a class="home-message-art" href="{{ .RelPermalink }}" aria-label="Watch {{ .Title }}">
           {{ with .Params.image }}<img src="{{ . | relURL }}" alt="" loading="lazy" width="960" height="540">{{ end }}
-          <span class="home-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"/></svg></span>
+          {{ if eq $i 0 }}<span class="home-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"/></svg></span>{{ end }}
         </a>
-        <div>
-          <p class="home-eyebrow">{{ if .Params.part_number }}Current series{{ else }}Latest message{{ end }}</p>
-          <h2 class="home-section-title" id="message-title">{{ .Params.series | default .Title }}</h2>
-          <p class="home-body-copy">{{ $home.messages.description }}</p>
-          <div class="home-actions">
-            <a class="home-button" href="{{ .RelPermalink }}">Watch the latest</a>
-            <a class="home-button home-button-outline" href="{{ "/messages/" | relURL }}">All messages</a>
-          </div>
-        </div>
-      </div>
-    </section>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p>{{ with .Params.speaker }}{{ . }} · {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+<section class="home-scripture" style="--quote-image: url('{{ $home.scripture.image | relURL }}')" aria-label="Scripture">
+  <blockquote>{{ $home.scripture.text }}<cite>{{ $home.scripture.reference }}</cite></blockquote>
+</section>
+<section class="home-container home-section-space" aria-labelledby="families-title">
+  <div class="section-heading"><h2 class="home-section-title" id="families-title">{{ $home.families.heading }}</h2></div>
+  {{ partial "environments.html" . }}
+</section>
+<section class="home-connect home-container" aria-label="Connect with Beachside">
+  {{ range $home.connect }}
+  <div class="home-connect-panel"><h2>{{ .title }}</h2><p>{{ .description }}</p><a class="home-button home-button-dark" href="{{ .url | relURL }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a></div>
   {{ end }}
-
-  <section class="home-mission home-container home-section-space" aria-label="Our mission">
-    <p>{{ $home.mission }}</p>
-  </section>
-
-  <section class="home-connect" aria-label="Connect with Beachside">
-    {{ range $home.connect }}
-      <div class="home-connect-panel">
-        <h2>{{ .title }}</h2>
-        <p>{{ .description }}</p>
-        <a class="home-button" href="{{ .url | relURL }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>
-      </div>
-    {{ end }}
-  </section>
+</section>
 {{ end }}
