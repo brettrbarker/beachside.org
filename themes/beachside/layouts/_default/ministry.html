@@ -1,0 +1,67 @@
+{{ define "main" }}
+{{ $ministry := .Params.ministry }}
+<article class="ministry-page">
+  <header class="ministry-hero" style="--ministry-image: url('{{ .Params.hero.image | relURL }}'); --ministry-position: {{ .Params.hero.position | default "center" }}">
+    <div class="home-container">
+      <p class="home-eyebrow">{{ $ministry.age }}</p>
+      <h1>{{ .Title }}</h1>
+      <p class="ministry-tagline">{{ .Params.hero.title }}</p>
+    </div>
+  </header>
+  <section class="home-container ministry-intro home-section-space" aria-label="About {{ .Title }}">
+    <div class="ministry-intro-copy">
+      <h2>{{ $ministry.intro }}</h2>
+      {{ with $ministry.body }}<div class="ministry-body">{{ . | markdownify }}</div>{{ end }}
+      <ul class="ministry-beliefs">
+        {{ range $ministry.beliefs }}<li>{{ . }}</li>{{ end }}
+      </ul>
+    </div>
+    {{ with $ministry.schedule }}
+      <aside class="ministry-schedule" aria-label="{{ $.Title }} meeting details">
+        <h2 class="home-kicker">{{ .label }} in {{ $.Title }}</h2>
+        <p class="ministry-times">{{ .times }} <span>{{ .period }}</span></p>
+        <div>{{ .body | markdownify }}</div>
+        <div class="ministry-contact">
+          <h3>Have questions about {{ $.Title }}?</h3>
+          <a class="home-button home-button-dark" href="{{ .contact | relURL }}">Contact Us</a>
+        </div>
+      </aside>
+    {{ end }}
+  </section>
+  {{ with $ministry.feature }}
+    <section class="ministry-feature">
+      <div class="home-container home-section-space">
+        <h2 class="home-section-title">{{ .title }}</h2>
+        <div class="ministry-feature-grid">
+          <img class="ministry-feature-image" src="{{ .image | relURL }}" alt="{{ $.Title }} program artwork" loading="lazy">
+          <div class="ministry-feature-cards">
+            <div class="ministry-idea">
+              <p class="home-kicker">Growing together</p>
+              <h3>{{ .idea }}</h3>
+              <p>{{ .idea_description }}</p>
+            </div>
+            <a class="ministry-resource" href="{{ .resource_url | relURL }}"{{ if .resource_external }} target="_blank" rel="noopener"{{ end }}>
+              <span><strong>{{ .resource_title }}</strong><span>{{ .resource_description }}</span></span>
+              <span class="ministry-resource-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+  {{ range .Params.sections }}{{ partial "content-section.html" (dict "section" . "page" $) }}{{ end }}
+  <section class="home-container home-section-space ministry-environments" aria-labelledby="environments-title">
+    <h2 class="home-section-title" id="environments-title">Environments for every age.</h2>
+    <div class="home-family-grid">
+      {{ range hugo.Data.home.families.cards }}
+        {{ $current := eq .url $.RelPermalink }}
+        <a class="home-family-card{{ if $current }} is-current{{ end }}" href="{{ .url | relURL }}"{{ if $current }} aria-current="page"{{ end }}>
+          <div class="ministry-environment-image"><img src="{{ .image | relURL }}" alt="" loading="lazy" width="540" height="480">{{ if $current }}<span>You’re here</span>{{ end }}</div>
+          <p class="home-family-age">{{ .age }}</p>
+          <h3>{{ .title }} <span aria-hidden="true">↗</span></h3>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+</article>
+{{ end }}

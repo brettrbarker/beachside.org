@@ -1,20 +1,16 @@
 <header class="site-header" data-header>
   <div class="header-inner">
-    <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="Beachside Church home">
-      <img class="brand-light" src="{{ site.Params.logoLight | relURL }}" width="300" height="92" alt="Beachside Church">
-      <img class="brand-dark" src="{{ site.Params.logoDark | relURL }}" width="300" height="92" alt="Beachside Church">
-    </a>
+    <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="Beachside Church home">{{ partial "brand-wordmark.html" . }}</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu" data-menu-toggle>
       <span aria-hidden="true">☰</span> Menu
     </button>
     <nav class="primary-nav" id="primary-menu" aria-label="Main navigation" data-menu>
       <ul>
-        {{ range site.Menus.main }}
-          {{ $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }}
-          <li>
-            <a class="{{ if .Params.featured }}nav-featured {{ end }}{{ if $active }}active{{ end }}" href="{{ .URL }}"{{ if .Params.external }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>
-          </li>
+        {{ range hugo.Data.home.navigation }}
+          {{ $active := and (not $.IsHome) (hasPrefix $.RelPermalink .url) }}
+          <li><a href="{{ .url | relURL }}"{{ if $active }} class="active" aria-current="{{ if eq $.RelPermalink .url }}page{{ else }}true{{ end }}"{{ end }}>{{ .label }}</a></li>
         {{ end }}
+        <li><a class="nav-featured" href="{{ hugo.Data.home.hero.button.url | relURL }}">{{ hugo.Data.home.hero.button.label }}</a></li>
         <li>
           <button class="search-toggle" type="button" data-search-open aria-label="Open site search">
             <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 5 5"></path></svg>
