@@ -24,9 +24,7 @@ ministry:
 
 
       Tell us about allergies, medical needs, or behavioral needs so we can best support your family.
-      No outside food or drink is permitted.
-
-      '
+      No outside food or drink is permitted.'
     contact: mailto:upstreet@beachside.org
   feature:
     title: Growing in faith, one Sunday at a time.
